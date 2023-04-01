@@ -13,25 +13,23 @@ import { HeaderComponent } from './components/header/header.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { HomeModule } from './modules/home/home.module';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatSlideToggleModule,
-    FlexLayoutModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatMenuModule,
-    LayoutModule,
-    MatSidenavModule,
-    HomeModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
+	declarations: [AppComponent, HeaderComponent],
+	imports: [
+		BrowserModule,
+		BrowserAnimationsModule,
+		MatSlideToggleModule,
+		FlexLayoutModule,
+		MatToolbarModule,
+		MatIconModule,
+		MatButtonModule,
+		MatMenuModule,
+		LayoutModule,
+		MatSidenavModule,
+		AppRoutingModule,
+	],
+	providers: [],
+	bootstrap: [AppComponent],
 })
 export class AppModule {}
