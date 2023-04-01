@@ -1,0 +1,28 @@
+<div class="headerContainer">
+  <mat-toolbar class="container">
+    <span>App</span>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <span>Cadastrar-se</span>
+      </button>
+      <button mat-menu-item>
+        <span>Login</span>
+      </button>
+    </mat-menu>
+
+    <div fxLayout="row" fxLayoutGap="24px" fxHide.lt-md>
+      <button mat-raised-button>Login</button>
+      <button mat-raised-button color="primary">Cadastrar-se</button>
+    </div>
+
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu || mobileView"
+      fxHide
+      fxShow.lt-md
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
