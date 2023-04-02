@@ -1,1 +1,50 @@
-<p>signin-form works!</p>
+<form
+	[formGroup]="signinForm"
+	(ngSubmit)="submit()"
+	class="form mat-elevation-z1"
+	fxLayout="column"
+	fxLayoutGap="16px"
+>
+	<mat-form-field appearance="outline">
+		<mat-label>Email</mat-label>
+		<input
+			matInput
+			placeholder="exemplo@gmail.com"
+			formControlName="email"
+			required
+			type="email"
+			autocomplete="email"
+		/>
+		<mat-error>
+			<mat-icon>error_outline</mat-icon>
+			Insira um email válido
+		</mat-error>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>Senha</mat-label>
+		<button
+			mat-icon-button
+			matSuffix
+			(click)="hide = !hide"
+			[attr.aria-label]="'Esconder senha'"
+			[attr.aria-pressed]="hide"
+			type="button"
+		>
+			<mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+		</button>
+		<input
+			matInput
+			formControlName="password"
+			required
+			[type]="hide ? 'password' : 'text'"
+			autocomplete="current-password"
+		/>
+		<mat-error>
+			<mat-icon>error_outline</mat-icon>
+			Senha não pode estar em branco
+		</mat-error>
+	</mat-form-field>
+
+	<button mat-flat-button color="primary">Entrar</button>
+</form>

@@ -5,4 +5,8 @@ import { Component } from '@angular/core';
 	templateUrl: './signin.component.html',
 	styleUrls: ['./signin.component.scss'],
 })
-export class SigninComponent {}
+export class SigninComponent {
+	handleModalEvent(event: string): void {
+		console.log(event);
+	}
+}
