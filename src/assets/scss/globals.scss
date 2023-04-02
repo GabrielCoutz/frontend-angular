@@ -1,3 +1,5 @@
+@import "./variables.scss";
+
 * {
 	margin: 0;
 	padding: 0;
@@ -8,4 +10,10 @@
 	max-width: 1400px;
 	padding: 0 1rem !important;
 	margin: 0 auto;
+}
+
+.form {
+	padding: 2rem;
+	background-color: white;
+	border-radius: $border-radius;
 }
