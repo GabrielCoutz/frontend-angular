@@ -11,11 +11,11 @@ export class SignupFormComponent {
 	@Output() modalEvent = new EventEmitter();
 
 	signupForm = this.formBuilder.group({
-		name: ['', Validators.required],
+		name: ['', [Validators.required]],
 		email: ['', [Validators.required, Validators.email]],
-		password: ['', Validators.required],
+		password: ['', [Validators.required]],
 	});
-	hide = true;
+	hidePassword = true;
 
 	submit() {
 		this.modalEvent.emit('loading');

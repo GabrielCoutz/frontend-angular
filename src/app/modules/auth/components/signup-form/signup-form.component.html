@@ -41,18 +41,18 @@
 		<button
 			mat-icon-button
 			matSuffix
-			(click)="hide = !hide"
+			(click)="hidePassword = !hidePassword"
 			[attr.aria-label]="'Esconder senha'"
-			[attr.aria-pressed]="hide"
+			[attr.aria-pressed]="hidePassword"
 			type="button"
 		>
-			<mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+			<mat-icon>{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
 		</button>
 		<input
 			matInput
 			formControlName="password"
 			required
-			[type]="hide ? 'password' : 'text'"
+			[type]="hidePassword ? 'password' : 'text'"
 			autocomplete="current-password"
 		/>
 		<mat-error>

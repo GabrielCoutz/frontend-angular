@@ -16,10 +16,10 @@ export class SigninFormComponent {
 	@Output() modalEvent = new EventEmitter();
 
 	signinForm = this.formBuilder.group({
-		email: ['example@gmail.com', [Validators.required, Validators.email]],
-		password: ['stringg', [Validators.required]],
+		email: ['', [Validators.required, Validators.email]],
+		password: ['', [Validators.required]],
 	});
-	hide = true;
+	hidePassword = true;
 	errorMessage: string | undefined;
 
 	submit() {
