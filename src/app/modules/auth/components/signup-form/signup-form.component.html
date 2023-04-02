@@ -1,0 +1,65 @@
+<form
+	[formGroup]="signupForm"
+	(ngSubmit)="submit()"
+	class="form mat-elevation-z1"
+	fxLayout="column"
+	fxLayoutGap="16px"
+>
+	<mat-form-field appearance="outline">
+		<mat-label>Nome</mat-label>
+		<input
+			matInput
+			formControlName="name"
+			required
+			type="text"
+			autocomplete="name"
+		/>
+		<mat-error>
+			<mat-icon>error_outline</mat-icon>
+			Nome não pode estar em branco
+		</mat-error>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>Email</mat-label>
+		<input
+			matInput
+			placeholder="exemplo@gmail.com"
+			formControlName="email"
+			required
+			type="email"
+			autocomplete="email"
+		/>
+		<mat-error>
+			<mat-icon>error_outline</mat-icon>
+			Insira um email válido
+		</mat-error>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>Senha</mat-label>
+		<button
+			mat-icon-button
+			matSuffix
+			(click)="hidePassword = !hidePassword"
+			[attr.aria-label]="'Esconder senha'"
+			[attr.aria-pressed]="hidePassword"
+			type="button"
+		>
+			<mat-icon>{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon>
+		</button>
+		<input
+			matInput
+			formControlName="password"
+			required
+			[type]="hidePassword ? 'password' : 'text'"
+			autocomplete="current-password"
+		/>
+		<mat-error>
+			<mat-icon>error_outline</mat-icon>
+			Senha não pode estar em branco
+		</mat-error>
+	</mat-form-field>
+
+	<button mat-flat-button color="primary">Cadastrar-se</button>
+</form>

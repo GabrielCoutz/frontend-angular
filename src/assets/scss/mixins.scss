@@ -1,5 +1,5 @@
 $medium-size: 768px;
-$small-size: 480px;
+$small-size: 500px;
 
 @mixin device($size) {
 	@if $size == medium {

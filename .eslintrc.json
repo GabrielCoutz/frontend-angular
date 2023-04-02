@@ -23,7 +23,7 @@
         "prettier/prettier": "error",
         "indent": [
             "warn",
-            2
+            "tab"
         ],
         "linebreak-style": [
             "warn",

@@ -1,28 +1,26 @@
 <div class="headerContainer">
-  <mat-toolbar class="container">
-    <span>App</span>
+	<mat-toolbar class="container">
+		<a [routerLink]="['/']">App</a>
 
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item>
-        <span>Cadastrar-se</span>
-      </button>
-      <button mat-menu-item>
-        <span>Login</span>
-      </button>
-    </mat-menu>
+		<mat-menu #menu="matMenu">
+			<a mat-menu-item [routerLink]="['account/signup']">Cadastrar-se</a>
+			<a mat-menu-item [routerLink]="['account/signin']">Login</a>
+		</mat-menu>
 
-    <div fxLayout="row" fxLayoutGap="24px" fxHide.lt-md>
-      <button mat-raised-button>Login</button>
-      <button mat-raised-button color="primary">Cadastrar-se</button>
-    </div>
+		<div fxLayout="row" fxLayoutGap="24px" fxHide.lt-md>
+			<a mat-raised-button [routerLink]="['account/signin']">Login</a>
+			<a mat-raised-button color="primary" [routerLink]="['account/signup']"
+				>Cadastrar-se</a
+			>
+		</div>
 
-    <button
-      mat-icon-button
-      [matMenuTriggerFor]="menu || mobileView"
-      fxHide
-      fxShow.lt-md
-    >
-      <mat-icon>more_vert</mat-icon>
-    </button>
-  </mat-toolbar>
+		<button
+			mat-icon-button
+			[matMenuTriggerFor]="menu || mobileView"
+			fxHide
+			fxShow.lt-md
+		>
+			<mat-icon>more_vert</mat-icon>
+		</button>
+	</mat-toolbar>
 </div>
