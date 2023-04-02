@@ -12,3 +12,10 @@ export interface IUserCreateError {
 	statusCode: number;
 	message: string;
 }
+
+export interface IUserDefaultResponse {
+	id: string;
+	name: string;
+	email: string;
+	created_at: string;
+}
