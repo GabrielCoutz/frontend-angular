@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AuthService } from 'src/app/services/auth/auth.service';
 @NgModule({
 	declarations: [
 		SignupComponent,
@@ -31,6 +32,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 		MatIconModule,
 		MatButtonModule,
 	],
-	providers: [],
+	providers: [AuthService],
 })
 export class AuthModule {}

@@ -13,6 +13,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 	declarations: [AppComponent, HeaderComponent],
@@ -28,6 +29,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 		LayoutModule,
 		MatSidenavModule,
 		AppRoutingModule,
+		HttpClientModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],
