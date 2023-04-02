@@ -61,5 +61,11 @@
 		</mat-error>
 	</mat-form-field>
 
+	<span class="error" *ngIf="errorMessage">
+		<mat-error>
+			<mat-icon>error_outline</mat-icon>
+			{{ errorMessage }}
+		</mat-error>
+	</span>
 	<button mat-flat-button color="primary">Cadastrar-se</button>
 </form>
