@@ -19,5 +19,7 @@ export class SignupFormComponent {
 
 	submit() {
 		this.modalEvent.emit('loading');
+
+		if (this.signupForm.valid) console.log(this.signupForm.value);
 	}
 }
