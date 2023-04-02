@@ -1,0 +1,39 @@
+<app-form [formGroup]="signupForm" (ngSubmit)="submit()">
+	<mat-form-field appearance="outline">
+		<mat-label>Nome</mat-label>
+		<input matInput formControlName="name" required type="text" />
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>Email</mat-label>
+		<input
+			matInput
+			placeholder="exemplo@gmail.com"
+			formControlName="email"
+			required
+			type="email"
+		/>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>Senha</mat-label>
+		<button
+			mat-icon-button
+			matSuffix
+			(click)="hide = !hide"
+			[attr.aria-label]="'Hide password'"
+			[attr.aria-pressed]="hide"
+			type="button"
+		>
+			<mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+		</button>
+		<input
+			matInput
+			formControlName="password"
+			required
+			[type]="hide ? 'password' : 'text'"
+		/>
+	</mat-form-field>
+
+	<button mat-flat-button color="primary">Cadastrar-se</button>
+</app-form>
