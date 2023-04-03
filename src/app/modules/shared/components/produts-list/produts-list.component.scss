@@ -1,0 +1,19 @@
+@use "/src/assets/scss/mixins.scss" as mixins;
+
+.productList {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	justify-items: stretch;
+	align-items: stretch;
+	gap: 18px;
+
+	.productItem,
+	mat-card {
+		width: 100%;
+		height: 100%;
+	}
+
+	@include mixins.device(medium) {
+		grid-template-columns: 1fr 1fr;
+	}
+}
