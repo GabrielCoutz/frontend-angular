@@ -1,1 +1,28 @@
-<p>produts-list works!</p>
+<section>
+	<ul>
+		<li *ngFor="let product of products">
+			<mat-card class="example-card">
+				<mat-card-header>
+					<mat-card-title
+						>{{ product.name }} | {{ product.price }}</mat-card-title
+					>
+					<mat-card-subtitle
+						>vendido por: {{ product.user.name }}</mat-card-subtitle
+					>
+				</mat-card-header>
+				<mat-card-content>
+					<p>{{ product.description }}</p>
+				</mat-card-content>
+				<mat-card-actions>
+					<button
+						mat-icon-button
+						color="primary"
+						aria-label="adicionar ao carrinho"
+					>
+						<mat-icon>add_shopping_cart</mat-icon>
+					</button>
+				</mat-card-actions>
+			</mat-card>
+		</li>
+	</ul>
+</section>

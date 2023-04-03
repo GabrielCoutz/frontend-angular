@@ -2,6 +2,7 @@ export interface IProductDefaultResponse {
 	id: string;
 	name: string;
 	price: string;
+	created_at: Date;
 	description?: string;
 	user: {
 		id: string;
