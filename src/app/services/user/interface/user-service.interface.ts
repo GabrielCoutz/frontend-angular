@@ -4,6 +4,8 @@ export interface IUserCreatePayload {
 	password: string;
 }
 
+export type IUserUpdatePayload = Partial<IUserCreatePayload>;
+
 export interface IUserCreateResponse {
 	id: string;
 }

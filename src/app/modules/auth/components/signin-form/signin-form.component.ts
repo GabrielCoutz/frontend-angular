@@ -2,7 +2,6 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../../app/services/auth/auth.service';
-import { IAuthServiceError } from '../../../../../app/services/auth/interface/auth-service.interface';
 
 @Component({
 	selector: 'app-signin-form',
