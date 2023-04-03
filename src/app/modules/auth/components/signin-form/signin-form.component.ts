@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../../../../app/services/auth/auth.service';
 import { IAuthServiceError } from '../../../../../app/services/auth/interface/auth-service.interface';
 
@@ -11,7 +12,8 @@ import { IAuthServiceError } from '../../../../../app/services/auth/interface/au
 export class SigninFormComponent {
 	constructor(
 		private readonly formBuilder: FormBuilder,
-		private readonly authService: AuthService
+		private readonly authService: AuthService,
+		private readonly router: Router
 	) {}
 	@Output() modalEvent = new EventEmitter();
 
@@ -35,10 +37,11 @@ export class SigninFormComponent {
 			this.authService.signin(signinDto).subscribe({
 				next: (response) => {
 					this.modalEvent.emit('close');
-					console.log(response);
+					localStorage.setItem('token', response.token);
+					this.router.navigate(['/profile', response.id]);
 				},
-				error: (error: IAuthServiceError) => {
-					console.log(error);
+				error: () => {
+					this.modalEvent.emit('close');
 					this.errorMessage = 'Credenciais inválidas';
 				},
 			});

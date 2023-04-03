@@ -1,5 +1,6 @@
 export interface IAuthService {
 	token: string;
+	id: string;
 }
 
 export interface IAuthServiceError {
