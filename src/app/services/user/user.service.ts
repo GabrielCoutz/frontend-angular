@@ -5,6 +5,7 @@ import {
 	IUserCreatePayload,
 	IUserCreateResponse,
 	IUserDefaultResponse,
+	IUserUpdatePayload,
 } from './interface/user-service.interface';
 
 @Injectable({
@@ -27,17 +28,31 @@ export class UserService {
 
 	update(
 		id: string,
-		payload: IUserCreatePayload
+		payload: IUserUpdatePayload
 	): Observable<IUserDefaultResponse> {
-		return this.request.put<IUserDefaultResponse>(
+		const token = localStorage.getItem('token');
+
+		return this.request.patch<IUserDefaultResponse>(
 			`${this.apiUrl}/users/${id}`,
-			payload
+			payload,
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
 		);
 	}
 
 	delete(id: string): Observable<IUserDefaultResponse> {
+		const token = localStorage.getItem('token');
+
 		return this.request.delete<IUserDefaultResponse>(
-			`${this.apiUrl}/users/${id}`
+			`${this.apiUrl}/users/${id}`,
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
 		);
 	}
 
