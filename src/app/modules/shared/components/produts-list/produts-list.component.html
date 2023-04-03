@@ -1,10 +1,11 @@
-<section>
-	<ul>
-		<li *ngFor="let product of products">
+<section class="container">
+	<ul class="productList">
+		<li *ngFor="let product of products" class="productItem">
 			<mat-card class="example-card">
 				<mat-card-header>
 					<mat-card-title
-						>{{ product.name }} | {{ product.price }}</mat-card-title
+						>{{ product.name }} <br />
+						{{ product.price | currencyBr }}</mat-card-title
 					>
 					<mat-card-subtitle
 						>vendido por: {{ product.user.name }}</mat-card-subtitle

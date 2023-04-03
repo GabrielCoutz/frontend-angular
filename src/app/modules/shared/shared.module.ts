@@ -7,8 +7,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+import { CurrencyBrPipe } from '../../pipes/currency-br.pipe';
+
+registerLocaleData(localePt);
+
 @NgModule({
-	declarations: [ProdutsListComponent],
+	declarations: [ProdutsListComponent, CurrencyBrPipe],
 	imports: [
 		CommonModule,
 		FlexLayoutModule,
@@ -17,5 +24,6 @@ import { MatIconModule } from '@angular/material/icon';
 		MatIconModule,
 	],
 	exports: [ProdutsListComponent],
+	providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
 })
 export class SharedModule {}
