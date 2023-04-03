@@ -11,3 +11,7 @@ export interface ISigninPayload {
 	email: string;
 	password: string;
 }
+
+export interface IValidateRespose {
+	id: string;
+}
