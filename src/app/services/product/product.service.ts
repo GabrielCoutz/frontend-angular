@@ -37,7 +37,7 @@ export class ProductService {
 	): Observable<IProductDefaultResponse> {
 		const token = localStorage.getItem('token');
 
-		return this.request.put<IProductDefaultResponse>(
+		return this.request.patch<IProductDefaultResponse>(
 			`${this.apiUrl}/${id}`,
 			product,
 			{
