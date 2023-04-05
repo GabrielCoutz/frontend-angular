@@ -37,7 +37,7 @@ export class ProductService {
 	): Observable<IProductDefaultResponse> {
 		const token = localStorage.getItem('token');
 
-		return this.request.put<IProductDefaultResponse>(
+		return this.request.patch<IProductDefaultResponse>(
 			`${this.apiUrl}/${id}`,
 			product,
 			{
@@ -48,7 +48,7 @@ export class ProductService {
 		);
 	}
 
-	delete(id: string): Observable<IProductDefaultResponse> {
+	delete(id: string): Observable<object> {
 		const token = localStorage.getItem('token');
 
 		return this.request.delete<IProductDefaultResponse>(
