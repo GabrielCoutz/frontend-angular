@@ -1,1 +1,45 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("./assets/scss/globals.scss");
+
+html,
+body {
+	height: 100%;
+}
+body {
+	margin: 0;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+	background-color: #eee;
+}
+.custom-snackbar {
+	.mdc-snackbar__label {
+		color: black !important;
+	}
+
+	.mdc-button__label {
+		color: black !important;
+	}
+
+	.mdc-button__ripple {
+		border: 1px solid #c5c5c5;
+	}
+
+	&.success {
+		.mdc-snackbar__surface {
+			background: #ffffff !important;
+			border: 2px solid #41fc86;
+		}
+	}
+
+	&.error {
+		.mdc-snackbar__surface {
+			background: white !important;
+			border: 2px solid #fc4141;
+		}
+	}
+
+	&.alert {
+		.mdc-snackbar__surface {
+			background: white !important;
+			border: 2px solid #f3ff22;
+		}
+	}
+}

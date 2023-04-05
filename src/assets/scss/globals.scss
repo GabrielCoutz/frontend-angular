@@ -1,0 +1,45 @@
+@use "./mixins.scss" as mixin;
+@import "./variables.scss";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+li {
+	list-style: none;
+}
+
+ul {
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.container {
+	max-width: 1400px;
+	padding: 0 1rem !important;
+	margin: 0 auto;
+}
+
+.form {
+	padding: 2rem;
+	background-color: white;
+	border-radius: $border-radius;
+}
+
+.title {
+	font-size: 3rem;
+	text-transform: uppercase;
+	font-weight: 700;
+	letter-spacing: 3px;
+	color: $black;
+
+	@include mixin.device(medium) {
+		font-size: 2rem;
+	}
+}
