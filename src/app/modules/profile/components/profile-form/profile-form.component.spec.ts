@@ -46,6 +46,10 @@ describe('ProfileFormComponent', () => {
 		fixture.detectChanges();
 	});
 
+	afterEach(() => {
+		httpTestingController.verify();
+	});
+
 	it('should create', () => {
 		expect(component).toBeTruthy();
 	});
@@ -105,8 +109,6 @@ describe('ProfileFormComponent', () => {
 
 	describe('On init', () => {
 		it('should load data of user', () => {
-			spyOn(userService, 'get').and.returnValue(of(userExpectPayload));
-
 			component.ngOnInit();
 
 			expect(userService.get).toHaveBeenCalledTimes(1);

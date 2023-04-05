@@ -48,7 +48,7 @@ export class ProductService {
 		);
 	}
 
-	delete(id: string): Observable<IProductDefaultResponse> {
+	delete(id: string): Observable<object> {
 		const token = localStorage.getItem('token');
 
 		return this.request.delete<IProductDefaultResponse>(

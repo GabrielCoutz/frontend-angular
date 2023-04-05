@@ -43,17 +43,14 @@ export class UserService {
 		);
 	}
 
-	delete(id: string): Observable<IUserDefaultResponse> {
+	delete(id: string): Observable<object> {
 		const token = localStorage.getItem('token');
 
-		return this.request.delete<IUserDefaultResponse>(
-			`${this.apiUrl}/users/${id}`,
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			}
-		);
+		return this.request.delete(`${this.apiUrl}/users/${id}`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
 	}
 
 	getAll(): Observable<IUserDefaultResponse[]> {

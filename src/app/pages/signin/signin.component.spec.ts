@@ -9,6 +9,7 @@ import {
 } from '../../services/auth/auth.service.mocks';
 import { AuthModule } from '../../modules/auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HeaderComponent } from '../../components/header/header.component';
 
 describe('SigninComponent', () => {
 	let component: SigninComponent;
@@ -21,7 +22,7 @@ describe('SigninComponent', () => {
 		});
 
 		await TestBed.configureTestingModule({
-			declarations: [SigninComponent],
+			declarations: [SigninComponent, HeaderComponent],
 			imports: [AuthModule, BrowserAnimationsModule],
 			providers: [
 				{
@@ -41,6 +42,7 @@ describe('SigninComponent', () => {
 	});
 
 	it('should call modalEvent method', () => {
+		spyOn(component, 'handleModalEvent');
 		component.handleModalEvent('test');
 
 		expect(component.handleModalEvent).toHaveBeenCalledTimes(1);

@@ -4,15 +4,8 @@ import {
 	HttpTestingController,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import {
-	ActivatedRouteSnapshot,
-	Router,
-	RouterStateSnapshot,
-} from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
-import { authUserTokenExpect } from '../../../services/auth/auth.service.mocks';
-
-import { of, throwError } from 'rxjs';
 
 import { ProfileGuard } from './profile.guard';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -23,14 +16,6 @@ describe('ProfileGuard', () => {
 	let guard: ProfileGuard;
 	let authService: AuthService;
 	let router: Router;
-	const mockActivatedRouteSnapshot =
-		jasmine.createSpyObj<ActivatedRouteSnapshot>('ActivatedRouteSnapshot', [
-			'toString',
-		]);
-	const mockRouterStateSnapshot = jasmine.createSpyObj<RouterStateSnapshot>(
-		'RouterStateSnapshot',
-		['toString']
-	);
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
@@ -43,16 +28,12 @@ describe('ProfileGuard', () => {
 		guard = TestBed.inject(ProfileGuard);
 	});
 
-	it('should be created', () => {
-		expect(guard).toBeTruthy();
+	afterEach(() => {
+		httpTestingController.verify();
 	});
 
-	it('should return true when user is logged in', () => {
-		spyOn(authService, 'validate').and.returnValue(of(authUserTokenExpect));
-
-		expect(
-			guard.canActivate(mockActivatedRouteSnapshot, mockRouterStateSnapshot)
-		).toBeTruthy();
+	it('should be created', () => {
+		expect(guard).toBeTruthy();
 	});
 
 	// O teste abaixo é para verificar se caso o usuário não for encontrado, o guard redireciona

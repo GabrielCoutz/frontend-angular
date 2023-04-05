@@ -63,7 +63,7 @@ describe('AuthService', () => {
 	});
 
 	describe('Validate credentials', () => {
-		it('should validate and return id from bearer token', () => {
+		it('should validate and return id from bearer token', (done) => {
 			authService.validate(authUserTokenPayload).subscribe({
 				next: (response) => expect(response).toEqual(authUserTokenExpect),
 				complete: () => expect(true).toBeTruthy(),
@@ -74,9 +74,10 @@ describe('AuthService', () => {
 			);
 			expect(req.request.method).toEqual('GET');
 			req.flush(authUserTokenExpect);
+			done();
 		});
 
-		it('should return an error with invalid credentials', () => {
+		it('should return an error with invalid credentials', (done) => {
 			spyOn(authService, 'validate').and.returnValue(
 				throwError(() => new Error('Invalid credentials'))
 			);
@@ -84,6 +85,8 @@ describe('AuthService', () => {
 			authService.validate(authUserTokenPayload).subscribe({
 				error: (erro) => expect(erro.message).toEqual('Invalid credentials'),
 			});
+
+			done();
 		});
 	});
 });

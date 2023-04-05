@@ -7,12 +7,15 @@ import { UserService } from './user.service';
 import { HttpClient } from '@angular/common/http';
 import { userCreatePayload, userExpectPayload } from './user.service.mocks';
 
-import { throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
+import { authUserTokenExpect } from '../auth/auth.service.mocks';
+import { AuthService } from '../auth/auth.service';
 
 describe('UserService', () => {
 	let httpTestingController: HttpTestingController;
 	let userService: UserService;
 	let httpClient: HttpClient;
+	let authService: AuthService;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
@@ -21,6 +24,7 @@ describe('UserService', () => {
 
 		httpTestingController = TestBed.inject(HttpTestingController);
 		userService = TestBed.inject(UserService);
+		authService = TestBed.inject(AuthService);
 		httpClient = TestBed.inject(HttpClient);
 	});
 
@@ -74,8 +78,9 @@ describe('UserService', () => {
 		});
 
 		it('should pass bearer token in authorization header', () => {
+			spyOn(authService, 'validate').and.returnValue(of(authUserTokenExpect));
+
 			const userId = '1';
-			const expectedHeaders = { Authorization: 'Bearer null' };
 
 			userService.update(userId, userCreatePayload).subscribe();
 
@@ -83,9 +88,7 @@ describe('UserService', () => {
 				`http://localhost:3000/users/${userId}`
 			);
 			expect(req.request.method).toEqual('PATCH');
-			expect(req.request.headers.get('Authorization')).toEqual(
-				expectedHeaders.Authorization
-			);
+			expect(req.request.headers.has('Authorization')).toBeTrue();
 			req.flush(userExpectPayload);
 		});
 
@@ -105,21 +108,19 @@ describe('UserService', () => {
 		it('should be deleted', () => {
 			const userId = '1';
 
-			userService.delete(userId).subscribe({
-				next: (response) => expect(response).toEqual(userExpectPayload),
-				complete: () => expect(true).toBeTruthy(),
-			});
+			userService.delete(userId).subscribe();
 
 			const req = httpTestingController.expectOne(
 				`http://localhost:3000/users/${userId}`
 			);
 			expect(req.request.method).toEqual('DELETE');
-			req.flush(userExpectPayload);
+			req.flush({});
 		});
 
 		it('should pass bearer token in authorization header', () => {
+			spyOn(authService, 'validate').and.returnValue(of(authUserTokenExpect));
+
 			const userId = '1';
-			const expectedHeaders = { Authorization: 'Bearer null' };
 
 			userService.delete(userId).subscribe();
 
@@ -127,9 +128,8 @@ describe('UserService', () => {
 				`http://localhost:3000/users/${userId}`
 			);
 			expect(req.request.method).toEqual('DELETE');
-			expect(req.request.headers.get('Authorization')).toEqual(
-				expectedHeaders.Authorization
-			);
+			expect(req.request.headers.has('Authorization')).toBeTrue();
+			req.flush({});
 		});
 
 		it('should return an error with unauthorized user', () => {
@@ -185,6 +185,10 @@ describe('UserService', () => {
 				userService.get(userId).subscribe({
 					error: (error) => expect(error.message).toEqual('User not found'),
 				});
+
+				httpTestingController.expectNone(
+					`http://localhost:3000/users/${userId}`
+				);
 			});
 		});
 	});

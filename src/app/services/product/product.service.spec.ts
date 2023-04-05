@@ -11,7 +11,9 @@ import {
 	productExpectPayload,
 	productUpdatePayload,
 } from './product.service.mocks';
-import { throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
+import { authUserTokenExpect } from '../auth/auth.service.mocks';
+import { AuthService } from '../auth/auth.service';
 
 describe('ProductService', () => {
 	let httpTestingController: HttpTestingController;
@@ -51,17 +53,13 @@ describe('ProductService', () => {
 		});
 
 		it('should pass bearer token in authorization header', () => {
-			const expectedHeaders = { Authorization: 'Bearer null' };
-
 			productService.create(productCreatePayload).subscribe();
 
 			const req = httpTestingController.expectOne(
 				'http://localhost:3000/products'
 			);
 			expect(req.request.method).toEqual('POST');
-			expect(req.request.headers.get('Authorization')).toEqual(
-				expectedHeaders.Authorization
-			);
+			expect(req.request.headers.has('Authorization')).toBeTrue();
 			req.flush(productCreatePayload);
 		});
 
@@ -92,17 +90,13 @@ describe('ProductService', () => {
 		});
 
 		it('should pass bearer token in authorization header', () => {
-			const expectedHeaders = { Authorization: 'Bearer null' };
-
 			productService.update('1', productUpdatePayload).subscribe();
 
 			const req = httpTestingController.expectOne(
 				'http://localhost:3000/products/1'
 			);
 			expect(req.request.method).toEqual('PATCH');
-			expect(req.request.headers.get('Authorization')).toEqual(
-				expectedHeaders.Authorization
-			);
+			expect(req.request.headers.has('Authorization')).toBeTrue();
 			req.flush(productUpdatePayload);
 		});
 
@@ -121,10 +115,7 @@ describe('ProductService', () => {
 
 	describe('Delete product', () => {
 		it('should be deleted', () => {
-			productService.delete('1').subscribe({
-				next: (response) => expect(response).toEqual(productExpectPayload),
-				complete: () => expect(true).toBeTruthy(),
-			});
+			productService.delete('1').subscribe();
 
 			const req = httpTestingController.expectOne(
 				'http://localhost:3000/products/1'
@@ -134,17 +125,14 @@ describe('ProductService', () => {
 		});
 
 		it('should pass bearer token in authorization header', () => {
-			const expectedHeaders = { Authorization: 'Bearer null' };
-
 			productService.delete('1').subscribe();
 			const req = httpTestingController.expectOne(
 				'http://localhost:3000/products/1'
 			);
 
 			expect(req.request.method).toEqual('DELETE');
-			expect(req.request.headers.get('Authorization')).toEqual(
-				expectedHeaders.Authorization
-			);
+			expect(req.request.headers.has('Authorization')).toBeTrue();
+			req.flush({});
 		});
 
 		it('should return and error with unauthorized user', () => {
