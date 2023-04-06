@@ -4,7 +4,10 @@ import {
 	BreakpointState,
 } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
+
+import { selectUser } from '../../store/user/user.selectors';
 
 @Component({
 	selector: 'app-header',
@@ -12,9 +15,13 @@ import { Subject, takeUntil } from 'rxjs';
 	styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-	constructor(private readonly breakpointObserver: BreakpointObserver) {}
+	constructor(
+		private readonly breakpointObserver: BreakpointObserver,
+		private readonly store: Store
+	) {}
 	destroyed = new Subject<void>();
 	mobileView = false;
+	usuario$ = this.store.select(selectUser);
 
 	ngOnInit() {
 		this.breakpointObserver
