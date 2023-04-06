@@ -1,6 +1,6 @@
 <section class="container">
 	<ul class="productList">
-		<li *ngFor="let product of products" class="productItem">
+		<li *ngFor="let product of products$ | async" class="productItem">
 			<mat-card class="example-card">
 				<mat-card-header>
 					<mat-card-title

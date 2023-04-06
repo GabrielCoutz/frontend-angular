@@ -1,8 +1,15 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IUserUpdatePayload } from 'src/app/services/user/interface/user-service.interface';
+import {
+	IUserDefaultResponse,
+	IUserUpdatePayload,
+} from 'src/app/services/user/interface/user-service.interface';
 import { UserService } from 'src/app/services/user/user.service';
+
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { deleteUser, saveUser } from '../../../../store/user/user.actions';
 
 @Component({
 	selector: 'app-profile-form',
@@ -14,11 +21,13 @@ export class ProfileFormComponent {
 		private readonly formBuilder: FormBuilder,
 		private readonly userService: UserService,
 		private readonly ActivatedRoute: ActivatedRoute,
-		private readonly router: Router
+		private readonly router: Router,
+		private readonly store: Store
 	) {}
 
 	@Output() modalEvent = new EventEmitter();
 	userId = this.ActivatedRoute.snapshot.params['id'];
+	usuario$: Observable<IUserDefaultResponse> | undefined;
 
 	hidePassword = true;
 	errorMessage: string | undefined;
@@ -34,7 +43,8 @@ export class ProfileFormComponent {
 		this.modalEvent.emit('loading');
 
 		this.userService.get(this.userId).subscribe({
-			next: ({ email, name }) => {
+			next: (response) => {
+				const { email, name } = response;
 				this.modalEvent.emit('close');
 
 				this.profileForm.setValue({
@@ -42,6 +52,12 @@ export class ProfileFormComponent {
 					email,
 					password: '',
 				});
+
+				// this.store.dispatch(
+				// 	saveUser({
+				// 		user: response,
+				// 	})
+				// );
 			},
 			error: () => {
 				this.modalEvent.emit('close');
@@ -89,5 +105,6 @@ export class ProfileFormComponent {
 	logout() {
 		localStorage.removeItem('token');
 		this.router.navigate(['account/signin']);
+		this.store.dispatch(deleteUser());
 	}
 }

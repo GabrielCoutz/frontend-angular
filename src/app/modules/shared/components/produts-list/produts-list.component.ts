@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { IProductDefaultResponse } from 'src/app/services/product/interface/product-service.interface';
+import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { selectAllProductsState } from '../../../../store/product/product.selectors';
 
 @Component({
 	selector: 'app-produts-list',
@@ -7,5 +8,6 @@ import { IProductDefaultResponse } from 'src/app/services/product/interface/prod
 	styleUrls: ['./produts-list.component.scss'],
 })
 export class ProdutsListComponent {
-	@Input() products: IProductDefaultResponse[] = [];
+	constructor(private readonly store: Store) {}
+	products$ = this.store.select(selectAllProductsState);
 }
