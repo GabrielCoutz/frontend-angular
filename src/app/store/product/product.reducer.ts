@@ -1,21 +1,44 @@
 import { createReducer, on } from '@ngrx/store';
-import { loadProducts, saveProducts } from './product.actions';
-import { IProdutState } from './product.state';
+import {
+	loadProducts,
+	loadProductsError,
+	loadProductsSuccess,
+} from './product.actions';
+import { IProductState } from './product.state';
 
-const initialState: IProdutState = {
+const initialState: IProductState = {
 	products: [],
 	isLoading: false,
+	error: null,
 };
 
 export const productsReducer = createReducer(
 	initialState,
-	on(loadProducts, (state): IProdutState => ({ ...state, isLoading: true })),
 	on(
-		saveProducts,
-		(state, { payload }): IProdutState => ({
+		loadProducts,
+		(state): IProductState => ({
 			...state,
-			products: payload.products,
+			products: [],
+			isLoading: true,
+			error: null,
+		})
+	),
+	on(
+		loadProductsSuccess,
+		(state, { payload }): IProductState => ({
+			...state,
+			products: payload,
 			isLoading: false,
+			error: null,
+		})
+	),
+	on(
+		loadProductsError,
+		(state, { error }): IProductState => ({
+			...state,
+			products: [],
+			isLoading: false,
+			error,
 		})
 	)
 );

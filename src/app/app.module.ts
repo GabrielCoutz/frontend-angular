@@ -18,6 +18,8 @@ import { StoreModule } from '@ngrx/store';
 import { userReducer } from './store/user/user.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { productsReducer } from './store/product/product.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { ProductsEffects } from './store/product/product.effect';
 
 @NgModule({
 	declarations: [AppComponent, HeaderComponent],
@@ -39,6 +41,7 @@ import { productsReducer } from './store/product/product.reducer';
 			products: productsReducer,
 		}),
 		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+		EffectsModule.forRoot([ProductsEffects]),
 	],
 	providers: [],
 	bootstrap: [AppComponent],

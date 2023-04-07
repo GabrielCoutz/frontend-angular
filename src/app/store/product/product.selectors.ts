@@ -1,9 +1,15 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { IProdutState } from './product.state';
+import { IProductState } from './product.state';
 
-const selectProductState = createFeatureSelector<IProdutState>('products');
+export const selectProductState =
+	createFeatureSelector<IProductState>('products');
 
 export const selectAllProductsState = createSelector(
 	selectProductState,
-	(state: IProdutState) => state.products
+	(state: IProductState) => state.products
+);
+
+export const selectProductErrorState = createSelector(
+	selectProductState,
+	(state: IProductState) => state.error
 );

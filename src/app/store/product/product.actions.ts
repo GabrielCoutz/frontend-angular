@@ -1,9 +1,14 @@
 import { createAction, props } from '@ngrx/store';
-import { IProdutState } from './product.state';
+import { IProductDefaultResponse } from '../../services/product/interface/product-service.interface';
 
 export const loadProducts = createAction('[Products List] Load products');
-export const getAllProducts = createAction('[Products List] Get all products');
-export const saveProducts = createAction(
-	'[Products List] Save products',
-	props<{ payload: IProdutState }>()
+export const loadProductsSuccess = createAction(
+	'[Products List] Load products success',
+	props<{ payload: IProductDefaultResponse[] }>()
 );
+export const loadProductsError = createAction(
+	'[Products List] Load products error',
+	props<{ error: string }>()
+);
+
+export const getAllProducts = createAction('[Products List] Get all products');
