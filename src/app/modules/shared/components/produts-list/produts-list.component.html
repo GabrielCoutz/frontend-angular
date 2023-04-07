@@ -26,4 +26,5 @@
 			</mat-card>
 		</li>
 	</ul>
+	<app-error *ngIf="error$ | async as error" [errorMessage]="error"></app-error>
 </section>
