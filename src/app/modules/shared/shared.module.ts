@@ -11,11 +11,12 @@ import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { CurrencyBrPipe } from '../../pipes/currency-br.pipe';
+import { ErrorComponent } from './components/error/error.component';
 
 registerLocaleData(localePt);
 
 @NgModule({
-	declarations: [ProdutsListComponent, CurrencyBrPipe],
+	declarations: [ProdutsListComponent, CurrencyBrPipe, ErrorComponent],
 	imports: [
 		CommonModule,
 		FlexLayoutModule,
