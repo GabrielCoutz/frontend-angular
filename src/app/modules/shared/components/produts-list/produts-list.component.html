@@ -27,4 +27,5 @@
 		</li>
 	</ul>
 	<app-error *ngIf="error$ | async as error" [errorMessage]="error"></app-error>
+	<app-loading *ngIf="loading$ | async"></app-loading>
 </section>

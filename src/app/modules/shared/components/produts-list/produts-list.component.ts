@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
-	selectAllProductsState,
-	selectProductErrorState,
+	selectAllProducts,
+	selectProductError,
+	selectProductLoading,
 } from '../../../../store/product/product.selectors';
 
 @Component({
@@ -12,6 +13,7 @@ import {
 })
 export class ProdutsListComponent {
 	constructor(private readonly store: Store) {}
-	products$ = this.store.select(selectAllProductsState);
-	error$ = this.store.select(selectProductErrorState);
+	products$ = this.store.select(selectAllProducts);
+	error$ = this.store.select(selectProductError);
+	loading$ = this.store.select(selectProductLoading);
 }
