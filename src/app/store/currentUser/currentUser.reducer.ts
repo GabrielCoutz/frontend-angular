@@ -24,7 +24,6 @@ export const currentUserReducer = createReducer(
 			...state,
 			isLoading: true,
 			error: null,
-			user: null,
 		})
 	),
 	on(
@@ -68,7 +67,6 @@ export const currentUserReducer = createReducer(
 			...state,
 			isLoading: false,
 			error,
-			user: null,
 		})
 	),
 	on(
