@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import {
 	selectCurrentUser,
 	selectCurrentUserError,
+	selectCurrentUserId,
 	selectCurrentUserLoading,
 } from '../../../../store/currentUser/currentUser.selectors';
 import {
@@ -34,6 +35,7 @@ export class ProfileFormComponent {
 	});
 	hidePassword = false;
 	currentUser$ = this.store.select(selectCurrentUser);
+	currentUserId$ = this.store.select(selectCurrentUserId);
 	error$ = this.store.select(selectCurrentUserError);
 	loading$ = this.store.select(selectCurrentUserLoading);
 
@@ -56,11 +58,11 @@ export class ProfileFormComponent {
 			email: this.profileForm.value.email,
 		} as IUserUpdatePayload;
 
-		this.currentUser$.subscribe((user) => {
-			if (user)
+		this.currentUserId$.subscribe((userId) => {
+			if (userId)
 				this.store.dispatch(
 					updateCurrentUser({
-						id: user.id,
+						id: userId,
 						payload: updateUserDto,
 					})
 				);

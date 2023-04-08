@@ -14,6 +14,11 @@ export const selectCurrentUserName = createSelector(
 	(user) => user?.name
 );
 
+export const selectCurrentUserId = createSelector(
+	selectCurrentUser,
+	(user) => user?.id
+);
+
 export const selectCurrentUserError = createSelector(
 	selectICurrentUserState,
 	(state) => state.error
