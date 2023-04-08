@@ -24,7 +24,7 @@ registerLocaleData(localePt);
 		MatButtonModule,
 		MatIconModule,
 	],
-	exports: [ProdutsListComponent],
+	exports: [ProdutsListComponent, ErrorComponent],
 	providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
 })
 export class SharedModule {}

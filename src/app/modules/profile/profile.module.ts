@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { UserService } from 'src/app/services/user/user.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
 	declarations: [ProfileComponent, ProfileFormComponent],
@@ -24,6 +25,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 		MatButtonModule,
 		MatInputModule,
 		MatSnackBarModule,
+		SharedModule,
 	],
 	providers: [UserService],
 })

@@ -45,16 +45,10 @@
 		/>
 	</mat-form-field>
 
-	<span class="error" *ngIf="errorMessage">
-		<mat-error>
-			<mat-icon>error_outline</mat-icon>
-			{{ errorMessage }}
-		</mat-error>
-	</span>
-	<span class="infoMessage" *ngIf="infoMessage">
-		<mat-icon>check_circle_outline</mat-icon>
-		{{ infoMessage }}
-	</span>
-	<button mat-flat-button color="primary">Atualizar dados</button>
+	<app-error *ngIf="error$ | async as error" [errorMessage]="error"></app-error>
+
+	<button mat-flat-button color="primary" [disabled]="loading$ | async">
+		{{ (loading$ | async) ? "Carregando..." : "Atualizar dados" }}
+	</button>
 	<button mat-stroked-button (click)="logout()">Sair</button>
 </form>

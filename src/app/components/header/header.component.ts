@@ -6,8 +6,7 @@ import {
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
-
-import { selectUser } from '../../store/user/user.selectors';
+import { selectCurrentUser } from '../../store/currentUser/currentUser.selectors';
 
 @Component({
 	selector: 'app-header',
@@ -21,7 +20,7 @@ export class HeaderComponent {
 	) {}
 	destroyed = new Subject<void>();
 	mobileView = false;
-	usuario$ = this.store.select(selectUser);
+	user$ = this.store.select(selectCurrentUser);
 
 	ngOnInit() {
 		this.breakpointObserver

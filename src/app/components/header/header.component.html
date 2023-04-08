@@ -4,10 +4,10 @@
 
 		<mat-menu #menu="matMenu">
 			<a
-				*ngIf="usuario$ | async as usuario; else loginButtonMobile"
+				*ngIf="user$ | async as user; else loginButtonMobile"
 				mat-menu-item
-				[routerLink]="['profile', usuario.id]"
-				>{{ usuario.name }}</a
+				[routerLink]="['profile', user.id]"
+				>{{ user.name }}</a
 			>
 			<ng-template #loginButtonMobile>
 				<a mat-menu-item [routerLink]="['account/signin']">Login</a>
@@ -18,11 +18,11 @@
 
 		<div fxLayout="row" fxLayoutGap="24px" fxHide.lt-md>
 			<a
-				*ngIf="usuario$ | async as usuario; else loginButton"
+				*ngIf="user$ | async as user; else loginButton"
 				mat-stroked-button
 				color="primary"
-				[routerLink]="['profile', usuario.id]"
-				>{{ usuario.name }}</a
+				[routerLink]="['profile', user.id]"
+				>{{ user.name }}</a
 			>
 			<ng-template #loginButton>
 				<a mat-stroked-button [routerLink]="['account/signin']">Login</a>
