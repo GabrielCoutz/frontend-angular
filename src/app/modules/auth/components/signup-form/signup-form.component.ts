@@ -1,5 +1,6 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -10,9 +11,9 @@ import { UserService } from 'src/app/services/user/user.service';
 export class SignupFormComponent {
 	constructor(
 		private readonly formBuilder: FormBuilder,
-		private readonly userService: UserService
+		private readonly userService: UserService,
+		private readonly router: Router
 	) {}
-	@Output() modalEvent = new EventEmitter();
 
 	signupForm = this.formBuilder.group({
 		name: ['', [Validators.required]],
@@ -21,28 +22,27 @@ export class SignupFormComponent {
 	});
 	hidePassword = true;
 	errorMessage: string | undefined;
+	loading = false;
 
 	submit() {
 		this.errorMessage = '';
+		if (!this.signupForm.valid) return;
+		this.loading = true;
 
-		if (this.signupForm.valid) {
-			this.modalEvent.emit('loading');
-			const createUserDto = {
-				name: this.signupForm.value.name as string,
-				email: this.signupForm.value.email as string,
-				password: this.signupForm.value.password as string,
-			};
+		const createUserDto = {
+			name: this.signupForm.value.name as string,
+			email: this.signupForm.value.email as string,
+			password: this.signupForm.value.password as string,
+		};
 
-			this.userService.create(createUserDto).subscribe({
-				next: (response) => {
-					this.modalEvent.emit('close');
-					console.log(response);
-				},
-				error: (error) => {
-					console.log(error);
-					this.errorMessage = 'Email já em uso';
-				},
-			});
-		}
+		this.userService.create(createUserDto).subscribe({
+			next: () => {
+				this.router.navigate(['/account/signin']);
+			},
+			error: () => {
+				this.loading = false;
+				this.errorMessage = 'Email já em uso';
+			},
+		});
 	}
 }
