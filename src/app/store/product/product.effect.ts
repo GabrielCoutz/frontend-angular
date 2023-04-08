@@ -26,12 +26,11 @@ export class ProductsEffects {
 							loadProductsSuccess({
 								payload: products,
 							})
-						),
-						catchError((error) =>
-							of(loadProductsError({ error: error.message }))
 						)
 					)
-				)
+				),
+
+				catchError((error) => of(loadProductsError({ error: error.message })))
 			);
 		}
 	});

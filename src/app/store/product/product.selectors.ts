@@ -4,12 +4,17 @@ import { IProductState } from './product.state';
 export const selectProductState =
 	createFeatureSelector<IProductState>('products');
 
-export const selectAllProductsState = createSelector(
+export const selectAllProducts = createSelector(
 	selectProductState,
 	(state: IProductState) => state.products
 );
 
-export const selectProductErrorState = createSelector(
+export const selectProductError = createSelector(
 	selectProductState,
 	(state: IProductState) => state.error
+);
+
+export const selectProductLoading = createSelector(
+	selectProductState,
+	(state: IProductState) => state.isLoading
 );
