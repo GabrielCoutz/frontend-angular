@@ -15,11 +15,14 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
-import { userReducer } from './store/user/user.reducer';
+import { userReducer } from './store/users/user.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { productsReducer } from './store/product/product.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductsEffects } from './store/product/product.effect';
+import { UsersEffects } from './store/users/user.effect';
+import { currentUserReducer } from './store/currentUser/currentUser.reducer';
+import { CurrentUserEffects } from './store/currentUser/currentUser.effect';
 
 @NgModule({
 	declarations: [AppComponent, HeaderComponent],
@@ -39,9 +42,10 @@ import { ProductsEffects } from './store/product/product.effect';
 		StoreModule.forRoot({
 			user: userReducer,
 			products: productsReducer,
+			currentUser: currentUserReducer,
 		}),
 		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-		EffectsModule.forRoot([ProductsEffects]),
+		EffectsModule.forRoot([ProductsEffects, UsersEffects, CurrentUserEffects]),
 	],
 	providers: [],
 	bootstrap: [AppComponent],
