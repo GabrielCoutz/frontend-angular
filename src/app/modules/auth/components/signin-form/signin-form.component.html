@@ -52,5 +52,7 @@
 			{{ errorMessage }}
 		</mat-error>
 	</span>
-	<button mat-flat-button color="primary">Entrar</button>
+	<button mat-flat-button color="primary" [disabled]="loading">
+		{{ loading ? "Carregando..." : "Entrar" }}
+	</button>
 </form>
