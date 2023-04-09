@@ -1,138 +1,106 @@
-import { HttpClient } from '@angular/common/http';
-import {
-	HttpClientTestingModule,
-	HttpTestingController,
-} from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { UserService } from '../../../../services/user/user.service';
-import { userExpectPayload } from '../../../../services/user/user.service.mocks';
+
 import { AuthModule } from '../../../auth/auth.module';
 import { ProfileModule } from '../../profile.module';
 
 import { ProfileFormComponent } from './profile-form.component';
 
-import { of, throwError } from 'rxjs';
 import { profileFormMock } from './profile-form.mock';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import {
+	logoutCurrentUser,
+	updateCurrentUser,
+} from '../../../../store/currentUser/currentUser.actions';
+import { userInitialStateMock } from '../../../../store/currentUser/currentUser.selectors.spec';
+import { IUsersState } from '../../../../store/users/user.state';
+import { selectCurrentUserError } from '../../../../store/currentUser/currentUser.selectors';
 
 describe('ProfileFormComponent', () => {
-	let httpTestingController: HttpTestingController;
 	let fixture: ComponentFixture<ProfileFormComponent>;
-	let component: ProfileFormComponent;
-	let httpClient: HttpClient;
-	let userService: UserService;
-	let router: Router;
-	let store: MockStore;
+	let profileFormComponent: ProfileFormComponent;
+	let store: MockStore<IUsersState>;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [ProfileFormComponent],
-			imports: [
-				HttpClientTestingModule,
-				AuthModule,
-				BrowserAnimationsModule,
-				RouterTestingModule,
-				ProfileModule,
+			imports: [AuthModule, BrowserAnimationsModule, ProfileModule],
+			providers: [
+				provideMockStore({
+					initialState: userInitialStateMock,
+				}),
 			],
-			providers: [provideMockStore({})],
 		}).compileComponents();
 
-		httpTestingController = TestBed.inject(HttpTestingController);
 		fixture = TestBed.createComponent(ProfileFormComponent);
-		httpClient = TestBed.inject(HttpClient);
-		router = TestBed.inject(Router);
-		userService = TestBed.inject(UserService);
 		store = TestBed.inject(MockStore);
 
-		component = fixture.componentInstance;
+		profileFormComponent = fixture.componentInstance;
 		fixture.detectChanges();
 	});
 
 	afterEach(() => {
-		httpTestingController.verify();
+		fixture.destroy();
 	});
 
 	it('should create', () => {
-		expect(component).toBeTruthy();
+		expect(profileFormComponent).toBeTruthy();
 	});
 
 	describe('Submit form', () => {
-		it('should call update from userService with valida data from form', () => {
-			spyOn(userService, 'update').and.returnValue(of(userExpectPayload));
+		it('should dispatch updateCurrentUser with valid data from form', () => {
+			spyOn(store, 'dispatch').and.callThrough();
 
-			component.profileForm.setValue(profileFormMock);
+			profileFormComponent.profileForm.setValue(profileFormMock);
+			profileFormComponent.submit();
 
-			component.submit();
-
-			userService.update('123', profileFormMock).subscribe({
-				next: (response) => expect(response).toEqual(userExpectPayload),
-				complete: () => expect(true).toBeTruthy(),
-			});
+			expect(store.dispatch).toHaveBeenCalledWith(
+				updateCurrentUser({
+					id: '123',
+					payload: {
+						email: profileFormMock.email,
+						name: profileFormMock.name,
+					},
+				})
+			);
 		});
 
-		it('should not call userService with invalid data from form', () => {
-			spyOn(userService, 'update').and.returnValue(of(userExpectPayload));
+		it('should not dispatch with invalid data from form', () => {
+			spyOn(store, 'dispatch').and.callThrough();
 
-			component.profileForm.setValue({
+			profileFormComponent.profileForm.setValue({
 				...profileFormMock,
 				email: 'userexample.com',
 			});
+			profileFormComponent.submit();
 
-			component.submit();
-
-			expect(userService.update).toHaveBeenCalledTimes(0);
+			expect(store.dispatch).not.toHaveBeenCalled();
 		});
 
-		it('should return an error from userService', () => {
-			spyOn(userService, 'update').and.returnValue(
-				throwError(() => new Error('Internal Error'))
-			);
+		it('should return an error from user store', () => {
+			spyOn(store, 'dispatch').and.callThrough();
+			store.setState({ error: 'Any error', isLoading: false, user: [] });
 
-			component.profileForm.setValue(profileFormMock);
-
-			component.submit();
-
-			userService.update('123', profileFormMock).subscribe({
-				error: (error) => expect(error.message).toEqual('Internal Error'),
+			profileFormComponent.profileForm.setValue(profileFormMock);
+			profileFormComponent.submit();
+			const result = selectCurrentUserError.projector({
+				error: 'Any error',
+				isLoading: false,
+				user: null,
 			});
-			expect(userService.update).toHaveBeenCalled();
+
+			expect(store.dispatch).toHaveBeenCalled();
+			expect(result).toBe('Any error');
 		});
 	});
 
 	describe('Logout', () => {
-		it('should call logout method and redirect to signin page', () => {
-			spyOn(router, 'navigate');
+		it('should dispatch logoutCurrentUser', () => {
+			spyOn(store, 'dispatch').and.callThrough();
 
-			component.logout();
+			profileFormComponent.logout();
 
-			expect(router.navigate).toHaveBeenCalledWith(['account/signin']);
-		});
-	});
-
-	describe('On init', () => {
-		it('should load data of user', () => {
-			component.ngOnInit();
-
-			expect(userService.get).toHaveBeenCalledTimes(1);
-			expect(component.profileForm.value.name).toEqual(userExpectPayload.name);
-			expect(component.profileForm.value.email).toEqual(
-				userExpectPayload.email
-			);
-		});
-
-		it('should redirect to signin page if no user has been found', () => {
-			spyOn(userService, 'get').and.returnValue(throwError(() => new Error()));
-			spyOn(router, 'navigate');
-
-			component.ngOnInit();
-
-			userService.get('123').subscribe({
-				error: (error) => expect(error).toBeTruthy(),
-			});
-			expect(router.navigate).toHaveBeenCalledWith(['account/signin']);
+			expect(store.dispatch).toHaveBeenCalledWith(logoutCurrentUser());
 		});
 	});
 });
