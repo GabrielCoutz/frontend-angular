@@ -6,9 +6,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { HeaderComponent } from './header.component';
 
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+
 describe('HeaderComponent', () => {
 	let component: HeaderComponent;
 	let fixture: ComponentFixture<HeaderComponent>;
+	let store: MockStore;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
@@ -19,9 +22,12 @@ describe('HeaderComponent', () => {
 				MatIconModule,
 				RouterTestingModule,
 			],
+			providers: [provideMockStore({})],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(HeaderComponent);
+		store = TestBed.inject(MockStore);
+
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

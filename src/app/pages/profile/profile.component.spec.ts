@@ -13,11 +13,14 @@ import { userExpectPayload } from '../../services/user/user.service.mocks';
 
 import { ProfileComponent } from './profile.component';
 
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+
 describe('ProfileComponent', () => {
 	let httpTestingController: HttpTestingController;
 	let component: ProfileComponent;
 	let httpClient: HttpClient;
 	let fixture: ComponentFixture<ProfileComponent>;
+	let store: MockStore;
 
 	beforeEach(async () => {
 		const userServiceSpy = jasmine.createSpyObj<UserService>({
@@ -41,12 +44,14 @@ describe('ProfileComponent', () => {
 					provide: UserService,
 					useValue: userServiceSpy,
 				},
+				provideMockStore({}),
 			],
 		}).compileComponents();
 
 		httpTestingController = TestBed.inject(HttpTestingController);
 		fixture = TestBed.createComponent(ProfileComponent);
 		httpClient = TestBed.inject(HttpClient);
+		store = TestBed.inject(MockStore);
 
 		component = fixture.componentInstance;
 		fixture.detectChanges();

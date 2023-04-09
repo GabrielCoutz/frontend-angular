@@ -16,6 +16,7 @@ import { ProfileFormComponent } from './profile-form.component';
 
 import { of, throwError } from 'rxjs';
 import { profileFormMock } from './profile-form.mock';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 describe('ProfileFormComponent', () => {
 	let httpTestingController: HttpTestingController;
@@ -24,6 +25,7 @@ describe('ProfileFormComponent', () => {
 	let httpClient: HttpClient;
 	let userService: UserService;
 	let router: Router;
+	let store: MockStore;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
@@ -35,6 +37,7 @@ describe('ProfileFormComponent', () => {
 				RouterTestingModule,
 				ProfileModule,
 			],
+			providers: [provideMockStore({})],
 		}).compileComponents();
 
 		httpTestingController = TestBed.inject(HttpTestingController);
@@ -42,6 +45,8 @@ describe('ProfileFormComponent', () => {
 		httpClient = TestBed.inject(HttpClient);
 		router = TestBed.inject(Router);
 		userService = TestBed.inject(UserService);
+		store = TestBed.inject(MockStore);
+
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

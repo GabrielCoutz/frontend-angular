@@ -7,9 +7,12 @@ import { productExpectPayload } from '../../services/product/product.service.moc
 
 import { HomeComponent } from './home.component';
 
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+
 describe('HomeComponent', () => {
 	let homeComponent: HomeComponent;
 	let fixture: ComponentFixture<HomeComponent>;
+	let store: MockStore;
 
 	beforeEach(async () => {
 		const productServiceSpy = jasmine.createSpyObj<ProductService>({
@@ -28,9 +31,11 @@ describe('HomeComponent', () => {
 					provide: ProductService,
 					useValue: productServiceSpy,
 				},
+				provideMockStore({}),
 			],
 		}).compileComponents();
 		fixture = TestBed.createComponent(HomeComponent);
+		store = TestBed.inject(MockStore);
 
 		homeComponent = fixture.componentInstance;
 		fixture.detectChanges();
