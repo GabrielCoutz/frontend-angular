@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "lint": "npx eslint \"**/*.{ts, tsx, json}\" --fix",
-    "test": "ng test"
+    "test": "ng test",
+    "test:coverage": "ng test --code-coverage"
   },
   "private": true,
   "dependencies": {
