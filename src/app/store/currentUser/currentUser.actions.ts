@@ -35,4 +35,18 @@ export const updateCurrentUserError = createAction(
 	}>()
 );
 
+export const deleteCurrentUser = createAction(
+	'[CurrentUser] delete user',
+	props<{ id: string; payload: { email: string; password: string } }>()
+);
+export const deleteCurrentUserSuccess = createAction(
+	'[CurrentUser] delete user success'
+);
+export const deleteCurrentUserError = createAction(
+	'[CurrentUser] delete user error',
+	props<{
+		error: string;
+	}>()
+);
+
 export const logoutCurrentUser = createAction('[CurrentUser] logout user');

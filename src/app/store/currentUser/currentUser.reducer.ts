@@ -1,5 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 import {
+	deleteCurrentUser,
+	deleteCurrentUserError,
+	deleteCurrentUserSuccess,
 	loadCurrentUser,
 	loadCurrentUserError,
 	loadCurrentUserSuccess,
@@ -67,6 +70,31 @@ export const currentUserReducer = createReducer(
 			...state,
 			isLoading: false,
 			error,
+		})
+	),
+	on(
+		deleteCurrentUser,
+		(state): ICurrentUserState => ({
+			...state,
+			error: null,
+			isLoading: true,
+		})
+	),
+	on(
+		deleteCurrentUserSuccess,
+		(state): ICurrentUserState => ({
+			...state,
+			error: null,
+			isLoading: false,
+			user: null,
+		})
+	),
+	on(
+		deleteCurrentUserError,
+		(state, { error }): ICurrentUserState => ({
+			...state,
+			error,
+			isLoading: false,
 		})
 	),
 	on(

@@ -1,11 +1,23 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType, concatLatestFrom } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { map, exhaustMap, catchError } from 'rxjs/operators';
+import {
+	map,
+	exhaustMap,
+	catchError,
+	tap,
+	ignoreElements,
+} from 'rxjs/operators';
+import { AuthService } from '../../services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
 import {
+	deleteCurrentUser,
+	deleteCurrentUserError,
+	deleteCurrentUserSuccess,
 	loadCurrentUser,
 	loadCurrentUserError,
 	loadCurrentUserSuccess,
@@ -20,7 +32,10 @@ export class CurrentUserEffects {
 	constructor(
 		private readonly actions$: Actions,
 		private readonly userService: UserService,
-		private readonly store: Store
+		private readonly authService: AuthService,
+		private readonly store: Store,
+		private readonly router: Router,
+		private readonly matDialog: MatDialog
 	) {}
 
 	loadCurrentUser$ = createEffect(() => {
@@ -68,6 +83,52 @@ export class CurrentUserEffects {
 							of(updateCurrentUserError({ error: error.message }))
 						)
 					)
+				)
+			);
+		}
+	});
+
+	deleteCurrentUser$ = createEffect(() => {
+		{
+			return this.actions$.pipe(
+				ofType(deleteCurrentUser),
+				exhaustMap(({ id, payload }) =>
+					this.authService.signin(payload).pipe(
+						exhaustMap(({ token }) => {
+							if (token)
+								return this.userService
+									.delete(id)
+									.pipe(map(() => deleteCurrentUserSuccess()));
+
+							return of(
+								deleteCurrentUserError({ error: 'Credenciais inválidas' })
+							);
+						}),
+						catchError(() =>
+							of(deleteCurrentUserError({ error: 'Credenciais inválidas' }))
+						)
+					)
+				),
+
+				catchError((error: HttpErrorResponse) =>
+					of(deleteCurrentUserError({ error: error.message }))
+				)
+			);
+		}
+	});
+
+	deleteCurrentUserSuccess$ = createEffect(() => {
+		{
+			return this.actions$.pipe(
+				ofType(deleteCurrentUserSuccess),
+				tap(() => {
+					localStorage.removeItem('token');
+					this.matDialog.closeAll();
+					this.router.navigate(['account/signin']);
+				}),
+				ignoreElements(),
+				catchError((error) =>
+					of(deleteCurrentUserError({ error: error.message }))
 				)
 			);
 		}

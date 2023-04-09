@@ -23,6 +23,7 @@ import { ProductsEffects } from './store/product/product.effect';
 import { UsersEffects } from './store/users/user.effect';
 import { currentUserReducer } from './store/currentUser/currentUser.reducer';
 import { CurrentUserEffects } from './store/currentUser/currentUser.effect';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
 	declarations: [AppComponent, HeaderComponent],
@@ -33,6 +34,7 @@ import { CurrentUserEffects } from './store/currentUser/currentUser.effect';
 		FlexLayoutModule,
 		MatToolbarModule,
 		MatIconModule,
+		MatDialogModule,
 		MatButtonModule,
 		MatMenuModule,
 		LayoutModule,
