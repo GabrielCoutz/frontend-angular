@@ -19,6 +19,11 @@ export const selectCurrentUserId = createSelector(
 	(user) => user?.id
 );
 
+export const selectCurrentUserEmail = createSelector(
+	selectCurrentUser,
+	(user) => user?.email
+);
+
 export const selectCurrentUserError = createSelector(
 	selectICurrentUserState,
 	(state) => state.error
