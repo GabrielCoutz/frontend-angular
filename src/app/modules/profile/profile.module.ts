@@ -12,9 +12,19 @@ import { MatInputModule } from '@angular/material/input';
 import { UserService } from 'src/app/services/user/user.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SharedModule } from '../shared/shared.module';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { DangerZoneComponent } from './components/danger-zone/danger-zone.component';
+import { DeleteAccountFormComponent } from './components/delete-account-form/delete-account-form.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
-	declarations: [ProfileComponent, ProfileFormComponent],
+	declarations: [
+		ProfileComponent,
+		ProfileFormComponent,
+		DangerZoneComponent,
+		DeleteAccountFormComponent,
+	],
 	imports: [
 		CommonModule,
 		ProfileRoutingModule,
@@ -26,6 +36,9 @@ import { SharedModule } from '../shared/shared.module';
 		MatInputModule,
 		MatSnackBarModule,
 		SharedModule,
+		MatExpansionModule,
+		MatDialogModule,
+		MatTooltipModule,
 	],
 	providers: [UserService],
 })
