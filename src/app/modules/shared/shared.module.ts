@@ -32,7 +32,7 @@ registerLocaleData(localePt);
 		MatIconModule,
 		MatProgressSpinnerModule,
 	],
-	exports: [ProdutsListComponent, ErrorComponent],
+	exports: [ProdutsListComponent, ErrorComponent, MatCardModule],
 	providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
 })
 export class SharedModule {}
