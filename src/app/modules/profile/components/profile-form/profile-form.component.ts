@@ -1,20 +1,19 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { IUserUpdatePayload } from 'src/app/services/user/interface/user-service.interface';
 
 import { Store } from '@ngrx/store';
 
+import {
+	logoutCurrentUser,
+	updateCurrentUser,
+} from '../../../../store/currentUser/currentUser.actions';
 import {
 	selectCurrentUser,
 	selectCurrentUserError,
 	selectCurrentUserId,
 	selectCurrentUserLoading,
 } from '../../../../store/currentUser/currentUser.selectors';
-import {
-	logoutCurrentUser,
-	updateCurrentUser,
-} from '../../../../store/currentUser/currentUser.actions';
 
 @Component({
 	selector: 'app-profile-form',
@@ -24,7 +23,6 @@ import {
 export class ProfileFormComponent {
 	constructor(
 		private readonly formBuilder: FormBuilder,
-		private readonly router: Router,
 		private readonly store: Store
 	) {}
 
@@ -33,7 +31,7 @@ export class ProfileFormComponent {
 		email: ['', [Validators.email]],
 		password: ['', []],
 	});
-	hidePassword = false;
+	hidePassword = true;
 	currentUser$ = this.store.select(selectCurrentUser);
 	currentUserId$ = this.store.select(selectCurrentUserId);
 	error$ = this.store.select(selectCurrentUserError);
@@ -70,8 +68,6 @@ export class ProfileFormComponent {
 	}
 
 	logout() {
-		localStorage.removeItem('token');
-		this.router.navigate(['account/signin']);
 		this.store.dispatch(logoutCurrentUser());
 	}
 }
