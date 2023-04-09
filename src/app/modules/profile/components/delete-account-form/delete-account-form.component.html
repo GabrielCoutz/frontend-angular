@@ -1,0 +1,61 @@
+<section>
+	<h1>Para deletar sua conta é necessário inserir sua senha.</h1>
+	<p>Lembre-se, após deletar, não será possível recuperá-la!</p>
+	<form
+		[formGroup]="deleteAccountForm"
+		(ngSubmit)="submit()"
+		class="deleteAccountForm"
+		fxLayout="column"
+		fxFlexAlign="center"
+		fxLayoutGap="16px"
+		autocomplete="on"
+	>
+		<mat-form-field appearance="outline">
+			<mat-label>Senha</mat-label>
+			<button
+				mat-icon-button
+				matSuffix
+				(click)="hidePassword = !hidePassword"
+				[attr.aria-label]="'Esconder senha'"
+				[attr.aria-pressed]="hidePassword"
+				type="button"
+			>
+				<mat-icon>{{
+					hidePassword ? "visibility_off" : "visibility"
+				}}</mat-icon>
+			</button>
+			<input
+				matInput
+				formControlName="password"
+				[type]="hidePassword ? 'password' : 'text'"
+				autocomplete="current-password"
+				required
+			/>
+			<mat-error>
+				<mat-icon>error_outline</mat-icon>
+				Por favor, insira sua senha
+			</mat-error>
+		</mat-form-field>
+		<mat-error>
+			{{ error$ | async }}
+		</mat-error>
+
+		<div
+			matTooltip="Insira sua senha"
+			[matTooltipDisabled]="!deleteAccountForm.invalid"
+			matTooltipPosition="above"
+			class="buttonWrapper"
+		>
+			<button
+				mat-stroked-button
+				color="warn"
+				[disabled]="deleteAccountForm.invalid || (loading$ | async)"
+			>
+				{{ (loading$ | async) ? "Carregando..." : "Deletar conta" }}
+			</button>
+		</div>
+		<button mat-raised-button mat-dialog-close color="primary">
+			Mudei de ideia
+		</button>
+	</form>
+</section>
