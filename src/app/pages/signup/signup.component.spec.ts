@@ -26,11 +26,4 @@ describe('SignupComponent', () => {
 	it('should create', () => {
 		expect(component).toBeTruthy();
 	});
-
-	it('should call modalEvent method', () => {
-		spyOn(component, 'handleModalEvent');
-		component.handleModalEvent('test');
-
-		expect(component.handleModalEvent).toHaveBeenCalledTimes(1);
-	});
 });

@@ -4,6 +4,7 @@
 	class="form mat-elevation-z1"
 	fxLayout="column"
 	fxLayoutGap="16px"
+	autocomplete="on"
 >
 	<mat-form-field appearance="outline">
 		<mat-label>Nome</mat-label>
@@ -67,5 +68,7 @@
 			{{ errorMessage }}
 		</mat-error>
 	</span>
-	<button mat-flat-button color="primary">Cadastrar-se</button>
+	<button mat-flat-button color="primary" [disabled]="loading">
+		{{ loading ? "Carregando..." : "Cadastrar-se" }}
+	</button>
 </form>

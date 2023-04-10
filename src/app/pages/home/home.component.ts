@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IProductDefaultResponse } from 'src/app/services/product/interface/product-service.interface';
-import { ProductService } from 'src/app/services/product/product.service';
+import { Store } from '@ngrx/store';
+
+import { loadProducts } from '../../store/product/product.actions';
+import { selectAllProducts } from '../../store/product/product.selectors';
 
 @Component({
 	selector: 'app-home',
@@ -8,12 +10,11 @@ import { ProductService } from 'src/app/services/product/product.service';
 	styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-	constructor(private readonly productService: ProductService) {}
-	productsList: IProductDefaultResponse[] = [];
+	constructor(private readonly store: Store) {}
+
+	productsAlreadyLoaded$ = this.store.select(selectAllProducts);
 
 	ngOnInit() {
-		this.productService.getAll().subscribe({
-			next: (products) => (this.productsList = products),
-		});
+		this.store.dispatch(loadProducts());
 	}
 }
