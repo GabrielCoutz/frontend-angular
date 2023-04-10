@@ -13,14 +13,14 @@ import {
 } from './currentUser.actions';
 import { ICurrentUserState } from './currentUser.state';
 
-const initialState: ICurrentUserState = {
+export const currentUserInitialState: ICurrentUserState = {
 	user: null,
 	error: null,
 	isLoading: false,
 };
 
 export const currentUserReducer = createReducer(
-	initialState,
+	currentUserInitialState,
 	on(
 		loadCurrentUser,
 		(state): ICurrentUserState => ({
