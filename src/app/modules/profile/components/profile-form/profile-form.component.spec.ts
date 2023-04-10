@@ -14,7 +14,10 @@ import {
 } from '../../../../store/currentUser/currentUser.actions';
 import { userInitialStateMock } from '../../../../store/currentUser/currentUser.selectors.spec';
 import { IUsersState } from '../../../../store/users/user.state';
-import { selectCurrentUserError } from '../../../../store/currentUser/currentUser.selectors';
+import {
+	selectCurrentUser,
+	selectCurrentUserError,
+} from '../../../../store/currentUser/currentUser.selectors';
 
 describe('ProfileFormComponent', () => {
 	let fixture: ComponentFixture<ProfileFormComponent>;
@@ -50,6 +53,7 @@ describe('ProfileFormComponent', () => {
 	describe('Submit form', () => {
 		it('should dispatch updateCurrentUser with valid data from form', () => {
 			spyOn(store, 'dispatch').and.callThrough();
+			selectCurrentUser.setResult(userInitialStateMock.user);
 
 			profileFormComponent.profileForm.setValue(profileFormMock);
 			profileFormComponent.submit();
@@ -80,6 +84,7 @@ describe('ProfileFormComponent', () => {
 		it('should return an error from user store', () => {
 			spyOn(store, 'dispatch').and.callThrough();
 			store.setState({ error: 'Any error', isLoading: false, user: [] });
+			selectCurrentUser.setResult(userInitialStateMock.user);
 
 			profileFormComponent.profileForm.setValue(profileFormMock);
 			profileFormComponent.submit();
