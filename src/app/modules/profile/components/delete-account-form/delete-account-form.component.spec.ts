@@ -11,7 +11,10 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { deleteCurrentUser } from '../../../../store/currentUser/currentUser.actions';
 import { userInitialStateMock } from '../../../../store/currentUser/currentUser.selectors.spec';
-import { selectCurrentUserError } from '../../../../store/currentUser/currentUser.selectors';
+import {
+	selectCurrentUser,
+	selectCurrentUserError,
+} from '../../../../store/currentUser/currentUser.selectors';
 
 describe('DeleteAccountFormComponent', () => {
 	let deleteAccountFormComponent: DeleteAccountFormComponent;
@@ -50,6 +53,7 @@ describe('DeleteAccountFormComponent', () => {
 	describe('Submit form', () => {
 		it('should dispatch deleteCurrentUser with valid password', () => {
 			spyOn(store, 'dispatch').and.callThrough();
+			selectCurrentUser.setResult(userInitialStateMock.user);
 
 			deleteAccountFormComponent.deleteAccountForm.setValue({
 				password: '123',
@@ -81,6 +85,7 @@ describe('DeleteAccountFormComponent', () => {
 		it('should return an error with invalid password', () => {
 			spyOn(store, 'dispatch').and.callThrough();
 			store.setState({ error: 'Any error', isLoading: false, user: [] });
+			selectCurrentUser.setResult(userInitialStateMock.user);
 
 			deleteAccountFormComponent.deleteAccountForm.setValue({
 				password: '123',
