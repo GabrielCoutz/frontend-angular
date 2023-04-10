@@ -3,11 +3,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeModule } from './modules/home/home.module';
 
 describe('AppComponent', () => {
+	let store: MockStore;
+
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			imports: [
@@ -18,7 +21,10 @@ describe('AppComponent', () => {
 				MatMenuModule,
 			],
 			declarations: [AppComponent, HeaderComponent],
+			providers: [provideMockStore()],
 		}).compileComponents();
+
+		store = TestBed.inject(MockStore);
 	});
 
 	it('should create the app', () => {
