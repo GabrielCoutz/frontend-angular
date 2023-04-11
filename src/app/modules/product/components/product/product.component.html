@@ -1,0 +1,21 @@
+<section class="container backButton">
+	<a mat-flat-button routerLink="..">Voltar</a>
+</section>
+
+<section class="container product">
+	<mat-card class="example-card" *ngIf="product$ | async as product">
+		<mat-card-header>
+			<mat-card-subtitle
+				>Publicado por {{ product.user.name }}</mat-card-subtitle
+			>
+			<mat-card-title
+				>{{ product.name }} <br />
+				{{ product.price | currencyBr }}</mat-card-title
+			>
+		</mat-card-header>
+		<mat-card-content>
+			<p>{{ product.description }}</p>
+		</mat-card-content>
+	</mat-card>
+	<app-loading *ngIf="loading$ | async"></app-loading>
+</section>

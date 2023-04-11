@@ -24,6 +24,8 @@ import { UsersEffects } from './store/users/user.effect';
 import { currentUserReducer } from './store/currentUser/currentUser.reducer';
 import { CurrentUserEffects } from './store/currentUser/currentUser.effect';
 import { MatDialogModule } from '@angular/material/dialog';
+import { uniqueProductReducer } from './store/uniqueProduct/uniqueProduct.reducer';
+import { UniqueProductsEffects } from './store/uniqueProduct/uniqueProduct.effect';
 
 @NgModule({
 	declarations: [AppComponent, HeaderComponent],
@@ -43,11 +45,17 @@ import { MatDialogModule } from '@angular/material/dialog';
 		HttpClientModule,
 		StoreModule.forRoot({
 			user: userReducer,
-			products: productsReducer,
 			currentUser: currentUserReducer,
+			products: productsReducer,
+			uniqueProduct: uniqueProductReducer,
 		}),
 		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-		EffectsModule.forRoot([ProductsEffects, UsersEffects, CurrentUserEffects]),
+		EffectsModule.forRoot([
+			UsersEffects,
+			CurrentUserEffects,
+			ProductsEffects,
+			UniqueProductsEffects,
+		]),
 	],
 	providers: [],
 	bootstrap: [AppComponent],

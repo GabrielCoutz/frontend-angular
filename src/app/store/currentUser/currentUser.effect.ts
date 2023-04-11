@@ -21,6 +21,7 @@ import {
 	loadCurrentUser,
 	loadCurrentUserError,
 	loadCurrentUserSuccess,
+	logoutCurrentUser,
 	updateCurrentUser,
 	updateCurrentUserError,
 	updateCurrentUserSuccess,
@@ -120,7 +121,7 @@ export class CurrentUserEffects {
 	deleteCurrentUserSuccess$ = createEffect(() => {
 		{
 			return this.actions$.pipe(
-				ofType(deleteCurrentUserSuccess),
+				ofType(deleteCurrentUserSuccess, logoutCurrentUser),
 				tap(() => {
 					localStorage.removeItem('token');
 					this.matDialog.closeAll();
