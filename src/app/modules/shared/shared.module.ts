@@ -14,6 +14,7 @@ import { CurrencyBrPipe } from '../../pipes/currency-br.pipe';
 import { ErrorComponent } from './components/error/error.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterModule } from '@angular/router';
 
 registerLocaleData(localePt);
 
@@ -27,12 +28,21 @@ registerLocaleData(localePt);
 	imports: [
 		CommonModule,
 		FlexLayoutModule,
+		RouterModule,
 		MatCardModule,
 		MatButtonModule,
 		MatIconModule,
 		MatProgressSpinnerModule,
 	],
-	exports: [ProdutsListComponent, ErrorComponent, MatCardModule],
+	exports: [
+		ProdutsListComponent,
+		ErrorComponent,
+		MatCardModule,
+		LoadingComponent,
+		CurrencyBrPipe,
+		MatButtonModule,
+		FlexLayoutModule,
+	],
 	providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
 })
 export class SharedModule {}
