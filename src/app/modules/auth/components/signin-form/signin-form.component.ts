@@ -38,7 +38,7 @@ export class SigninFormComponent {
 				this.loading = false;
 
 				localStorage.setItem('token', response.token);
-				this.router.navigate(['/profile', response.id]);
+				this.router.navigate(['/profile', response.id, 'edit']);
 			},
 			error: () => {
 				this.loading = false;

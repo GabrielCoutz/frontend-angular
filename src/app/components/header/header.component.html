@@ -6,7 +6,7 @@
 			<a
 				*ngIf="user$ | async as user; else loginButtonMobile"
 				mat-menu-item
-				[routerLink]="['profile', user.id]"
+				[routerLink]="['profile', user.id, 'edit']"
 				>{{ user.name }}</a
 			>
 			<ng-template #loginButtonMobile>
@@ -26,7 +26,7 @@
 				*ngIf="user$ | async as user; else loginButton"
 				mat-stroked-button
 				color="primary"
-				[routerLink]="['profile', user.id]"
+				[routerLink]="['profile', user.id, 'edit']"
 				>{{ user.name }}</a
 			>
 			<ng-template #loginButton>
