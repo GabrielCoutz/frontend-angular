@@ -1,0 +1,13 @@
+@use "/src/assets/scss/mixins.scss" as mixins;
+
+.buttons {
+	max-width: 700px;
+	margin: 0 auto;
+	gap: 24px;
+	display: flex;
+	justify-content: center;
+
+	@include mixins.device(small) {
+		flex-direction: column;
+	}
+}
