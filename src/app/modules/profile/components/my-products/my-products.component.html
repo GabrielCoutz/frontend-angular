@@ -23,7 +23,11 @@
 					>
 						<mat-icon>edit</mat-icon>
 					</a>
-					<button mat-icon-button matTooltip="Deletar">
+					<button
+						mat-icon-button
+						matTooltip="Deletar"
+						(click)="deleteProductConfirmation(product)"
+					>
 						<mat-icon>delete</mat-icon>
 					</button>
 				</mat-card-actions>
