@@ -1,9 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import {
-	loadUniqueProduct,
-	loadUniqueProductError,
-	loadUniqueProductSuccess,
-} from './uniqueProduct.actions';
+import * as UniqueProductActions from './uniqueProduct.actions';
 import { IUniqueProductState } from './uniqueProduct.state';
 
 const initialState: IUniqueProductState = {
@@ -15,7 +11,7 @@ const initialState: IUniqueProductState = {
 export const uniqueProductReducer = createReducer(
 	initialState,
 	on(
-		loadUniqueProduct,
+		UniqueProductActions.loadUniqueProduct,
 		(state): IUniqueProductState => ({
 			...state,
 			error: null,
@@ -24,7 +20,7 @@ export const uniqueProductReducer = createReducer(
 		})
 	),
 	on(
-		loadUniqueProductSuccess,
+		UniqueProductActions.loadUniqueProductSuccess,
 		(state, { payload }): IUniqueProductState => ({
 			...state,
 			error: null,
@@ -33,7 +29,7 @@ export const uniqueProductReducer = createReducer(
 		})
 	),
 	on(
-		loadUniqueProductError,
+		UniqueProductActions.loadUniqueProductError,
 		(state, { error }): IUniqueProductState => ({
 			...state,
 			error,

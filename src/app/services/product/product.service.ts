@@ -5,7 +5,7 @@ import {
 	IProductCreatePayload,
 	IProductDefaultResponse,
 	IProductUpdatePayload,
-	IProductUpdateResponse,
+	IProduct,
 } from './interface/product-service.interface';
 
 @Injectable({
@@ -33,21 +33,14 @@ export class ProductService {
 		});
 	}
 
-	update(
-		id: string,
-		product: IProductUpdatePayload
-	): Observable<IProductUpdateResponse> {
+	update(id: string, product: IProductUpdatePayload): Observable<IProduct> {
 		const token = localStorage.getItem('token');
 
-		return this.request.patch<IProductUpdateResponse>(
-			`${this.apiUrl}/${id}`,
-			product,
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			}
-		);
+		return this.request.patch<IProduct>(`${this.apiUrl}/${id}`, product, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
 	}
 
 	delete(id: string): Observable<object> {

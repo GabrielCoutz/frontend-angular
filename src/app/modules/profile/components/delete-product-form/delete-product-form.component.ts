@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { IProductUpdateResponse } from '../../../../services/product/interface/product-service.interface';
+import { IProduct } from '../../../../services/product/interface/product-service.interface';
 import { deleteUniqueProduct } from '../../../../store/currentUser/currentUser.actions';
 
 @Component({
@@ -11,7 +11,7 @@ import { deleteUniqueProduct } from '../../../../store/currentUser/currentUser.a
 })
 export class DeleteProductFormComponent {
 	constructor(
-		@Inject(MAT_DIALOG_DATA) public data: { product: IProductUpdateResponse },
+		@Inject(MAT_DIALOG_DATA) public data: { product: IProduct },
 		private readonly store: Store
 	) {}
 
