@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import {
 	IProductCreatePayload,
 	IProductDefaultResponse,
+	IProductUpdatePayload,
 } from './interface/product-service.interface';
 
 @Injectable({
@@ -33,7 +34,7 @@ export class ProductService {
 
 	update(
 		id: string,
-		product: IProductDefaultResponse
+		product: IProductUpdatePayload
 	): Observable<IProductDefaultResponse> {
 		const token = localStorage.getItem('token');
 
