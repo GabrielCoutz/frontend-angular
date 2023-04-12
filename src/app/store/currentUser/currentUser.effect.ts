@@ -5,6 +5,12 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType, concatLatestFrom } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
+import { AuthService } from '../../services/auth/auth.service';
+import { ProductService } from '../../services/product/product.service';
+import { UserService } from '../../services/user/user.service';
+import { selectCurrentUser } from './currentUser.selectors';
+import * as CurrentUserActions from './currentUser.actions';
+
 import {
 	map,
 	exhaustMap,
@@ -12,28 +18,6 @@ import {
 	tap,
 	ignoreElements,
 } from 'rxjs/operators';
-import { AuthService } from '../../services/auth/auth.service';
-import { ProductService } from '../../services/product/product.service';
-import { UserService } from '../../services/user/user.service';
-import {
-	deleteCurrentUser,
-	deleteCurrentUserError,
-	deleteCurrentUserSuccess,
-	deleteUniqueProduct,
-	deleteUniqueProductError,
-	deleteUniqueProductSuccess,
-	loadCurrentUser,
-	loadCurrentUserError,
-	loadCurrentUserSuccess,
-	logoutCurrentUser,
-	updateCurrentUser,
-	updateCurrentUserError,
-	updateCurrentUserSuccess,
-	updateUniqueProduct,
-	updateUniqueProductError,
-	updateUniqueProductSuccess,
-} from './currentUser.actions';
-import { selectCurrentUser } from './currentUser.selectors';
 
 @Injectable()
 export class CurrentUserEffects {
@@ -50,27 +34,27 @@ export class CurrentUserEffects {
 	loadCurrentUser$ = createEffect(() => {
 		{
 			return this.actions$.pipe(
-				ofType(loadCurrentUser),
+				ofType(CurrentUserActions.loadCurrentUser),
 				concatLatestFrom(() => this.store.select(selectCurrentUser)),
 				exhaustMap(([{ id }, user]) => {
 					if (!user) {
 						return this.userService.get(id).pipe(
 							map((user) =>
-								loadCurrentUserSuccess({
+								CurrentUserActions.loadCurrentUserSuccess({
 									payload: user,
 								})
 							)
 						);
 					}
 					return of(
-						loadCurrentUserSuccess({
+						CurrentUserActions.loadCurrentUserSuccess({
 							payload: user,
 						})
 					);
 				}),
 
 				catchError((error: HttpErrorResponse) =>
-					of(loadCurrentUserError({ error: error.message }))
+					of(CurrentUserActions.loadCurrentUserError({ error: error.message }))
 				)
 			);
 		}
@@ -79,17 +63,21 @@ export class CurrentUserEffects {
 	updateCurrentUser$ = createEffect(() => {
 		{
 			return this.actions$.pipe(
-				ofType(updateCurrentUser),
+				ofType(CurrentUserActions.updateCurrentUser),
 				exhaustMap(({ id, payload }) =>
 					this.userService.update(id, payload).pipe(
 						map((user) =>
-							updateCurrentUserSuccess({
+							CurrentUserActions.updateCurrentUserSuccess({
 								payload: user,
 							})
 						),
 
 						catchError((error: HttpErrorResponse) =>
-							of(updateCurrentUserError({ error: error.message }))
+							of(
+								CurrentUserActions.updateCurrentUserError({
+									error: error.message,
+								})
+							)
 						)
 					)
 				)
@@ -100,27 +88,37 @@ export class CurrentUserEffects {
 	deleteCurrentUser$ = createEffect(() => {
 		{
 			return this.actions$.pipe(
-				ofType(deleteCurrentUser),
+				ofType(CurrentUserActions.deleteCurrentUser),
 				exhaustMap(({ id, payload }) =>
 					this.authService.signin(payload).pipe(
 						exhaustMap(({ token }) => {
 							if (token)
 								return this.userService
 									.delete(id)
-									.pipe(map(() => deleteCurrentUserSuccess()));
+									.pipe(
+										map(() => CurrentUserActions.deleteCurrentUserSuccess())
+									);
 
 							return of(
-								deleteCurrentUserError({ error: 'Credenciais inválidas' })
+								CurrentUserActions.deleteCurrentUserError({
+									error: 'Credenciais inválidas',
+								})
 							);
 						}),
 						catchError(() =>
-							of(deleteCurrentUserError({ error: 'Credenciais inválidas' }))
+							of(
+								CurrentUserActions.deleteCurrentUserError({
+									error: 'Credenciais inválidas',
+								})
+							)
 						)
 					)
 				),
 
 				catchError((error: HttpErrorResponse) =>
-					of(deleteCurrentUserError({ error: error.message }))
+					of(
+						CurrentUserActions.deleteCurrentUserError({ error: error.message })
+					)
 				)
 			);
 		}
@@ -129,7 +127,10 @@ export class CurrentUserEffects {
 	deleteCurrentUserSuccess$ = createEffect(() => {
 		{
 			return this.actions$.pipe(
-				ofType(deleteCurrentUserSuccess, logoutCurrentUser),
+				ofType(
+					CurrentUserActions.deleteCurrentUserSuccess,
+					CurrentUserActions.logoutCurrentUser
+				),
 				tap(() => {
 					localStorage.removeItem('token');
 					this.matDialog.closeAll();
@@ -137,7 +138,9 @@ export class CurrentUserEffects {
 				}),
 				ignoreElements(),
 				catchError((error) =>
-					of(deleteCurrentUserError({ error: error.message }))
+					of(
+						CurrentUserActions.deleteCurrentUserError({ error: error.message })
+					)
 				)
 			);
 		}
@@ -146,18 +149,22 @@ export class CurrentUserEffects {
 	updateUniqueProduct$ = createEffect(() => {
 		{
 			return this.actions$.pipe(
-				ofType(updateUniqueProduct),
+				ofType(CurrentUserActions.updateUniqueProduct),
 				exhaustMap(({ id, payload }) =>
 					this.productService.update(id, payload).pipe(
 						map((product) =>
-							updateUniqueProductSuccess({
+							CurrentUserActions.updateUniqueProductSuccess({
 								payload: product,
 							})
 						)
 					)
 				),
 				catchError((error: HttpErrorResponse) =>
-					of(updateUniqueProductError({ error: error.message }))
+					of(
+						CurrentUserActions.updateUniqueProductError({
+							error: error.message,
+						})
+					)
 				)
 			);
 		}
@@ -166,17 +173,21 @@ export class CurrentUserEffects {
 	deleteUniqueProduct$ = createEffect(() => {
 		{
 			return this.actions$.pipe(
-				ofType(deleteUniqueProduct),
+				ofType(CurrentUserActions.deleteUniqueProduct),
 				exhaustMap(({ id }) =>
 					this.productService.delete(id).pipe(
 						map(() => {
 							this.matDialog.closeAll();
-							return deleteUniqueProductSuccess({ id });
+							return CurrentUserActions.deleteUniqueProductSuccess({ id });
 						})
 					)
 				),
 				catchError((error: HttpErrorResponse) =>
-					of(deleteUniqueProductError({ error: error.message }))
+					of(
+						CurrentUserActions.deleteUniqueProductError({
+							error: error.message,
+						})
+					)
 				)
 			);
 		}

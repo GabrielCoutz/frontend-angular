@@ -3,11 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, exhaustMap, catchError } from 'rxjs/operators';
 import { ProductService } from '../../services/product/product.service';
-import {
-	loadUniqueProduct,
-	loadUniqueProductError,
-	loadUniqueProductSuccess,
-} from './uniqueProduct.actions';
+import * as UniqueProductActions from './uniqueProduct.actions';
 
 @Injectable()
 export class UniqueProductsEffects {
@@ -19,11 +15,11 @@ export class UniqueProductsEffects {
 	loadUniqueProduct$ = createEffect(() => {
 		{
 			return this.actions$.pipe(
-				ofType(loadUniqueProduct),
+				ofType(UniqueProductActions.loadUniqueProduct),
 				exhaustMap(({ id }) =>
 					this.productService.get(id).pipe(
 						map((product) =>
-							loadUniqueProductSuccess({
+							UniqueProductActions.loadUniqueProductSuccess({
 								payload: product,
 							})
 						)
@@ -31,7 +27,11 @@ export class UniqueProductsEffects {
 				),
 
 				catchError((error) =>
-					of(loadUniqueProductError({ error: error.message }))
+					of(
+						UniqueProductActions.loadUniqueProductError({
+							error: error.message,
+						})
+					)
 				)
 			);
 		}
