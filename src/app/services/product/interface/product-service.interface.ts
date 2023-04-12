@@ -17,3 +17,4 @@ export interface IProductCreatePayload {
 }
 
 export type IProductUpdatePayload = Partial<IProductCreatePayload>;
+export type IProductUpdateResponse = Omit<IProductDefaultResponse, 'user'>;
