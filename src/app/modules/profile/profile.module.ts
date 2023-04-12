@@ -19,6 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MyProductsComponent } from './components/my-products/my-products.component';
+import { EditProductComponent } from './components/edit-product/edit-product.component';
 
 @NgModule({
 	declarations: [
@@ -27,6 +28,7 @@ import { MyProductsComponent } from './components/my-products/my-products.compon
 		DangerZoneComponent,
 		DeleteAccountFormComponent,
 		MyProductsComponent,
+		EditProductComponent,
 	],
 	imports: [
 		CommonModule,
