@@ -1,3 +1,28 @@
 <h1 class="title">Sua conta</h1>
 
-<app-profile-form></app-profile-form>
+<nav mat-tab-nav-bar class="container" [tabPanel]="tabPanel">
+	<a
+		mat-tab-link
+		label="Meus produtos"
+		[routerLink]="['/profile', userId, 'edit']"
+		routerLinkActive="active"
+		>Meus Dados</a
+	>
+	<a
+		mat-tab-link
+		label="Meus produtos"
+		[routerLink]="['products']"
+		routerLinkActive="active"
+		>Meus produtos</a
+	>
+	<a
+		mat-tab-link
+		label="Configurações"
+		[routerLink]="['config']"
+		routerLinkActive="active"
+		>Configurações</a
+	>
+</nav>
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+
+<router-outlet></router-outlet>

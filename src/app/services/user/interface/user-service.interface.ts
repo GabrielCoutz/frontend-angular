@@ -1,3 +1,5 @@
+import { IProductDefaultResponse } from '../../product/interface/product-service.interface';
+
 export interface IUserCreatePayload {
 	name: string;
 	email: string;
@@ -20,4 +22,5 @@ export interface IUserDefaultResponse {
 	name: string;
 	email: string;
 	created_at: string;
+	products: Omit<IProductDefaultResponse, 'user'>[];
 }

@@ -1,4 +1,8 @@
 import { createAction, props } from '@ngrx/store';
+import {
+	IProductDefaultResponse,
+	IProductUpdatePayload,
+} from '../../services/product/interface/product-service.interface';
 import { IUserDefaultResponse } from '../../services/user/interface/user-service.interface';
 
 export const loadCurrentUser = createAction(
@@ -47,6 +51,32 @@ export const deleteCurrentUserError = createAction(
 	props<{
 		error: string;
 	}>()
+);
+
+export const updateUniqueProduct = createAction(
+	'[Unique Product] Update product',
+	props<{ id: string; payload: IProductUpdatePayload }>()
+);
+export const updateUniqueProductSuccess = createAction(
+	'[Unique Product] Update product success',
+	props<{ payload: Omit<IProductDefaultResponse, 'user'> }>()
+);
+export const updateUniqueProductError = createAction(
+	'[Unique Product] Update product error',
+	props<{ error: string }>()
+);
+
+export const deleteUniqueProduct = createAction(
+	'[Delete Product] Delete product',
+	props<{ id: string }>()
+);
+export const deleteUniqueProductSuccess = createAction(
+	'[Delete Product] Delete product success',
+	props<{ id: string }>()
+);
+export const deleteUniqueProductError = createAction(
+	'[Delete Product] Delete product error',
+	props<{ error: string }>()
 );
 
 export const logoutCurrentUser = createAction('[CurrentUser] logout user');

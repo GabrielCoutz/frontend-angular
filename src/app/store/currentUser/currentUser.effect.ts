@@ -13,11 +13,15 @@ import {
 	ignoreElements,
 } from 'rxjs/operators';
 import { AuthService } from '../../services/auth/auth.service';
+import { ProductService } from '../../services/product/product.service';
 import { UserService } from '../../services/user/user.service';
 import {
 	deleteCurrentUser,
 	deleteCurrentUserError,
 	deleteCurrentUserSuccess,
+	deleteUniqueProduct,
+	deleteUniqueProductError,
+	deleteUniqueProductSuccess,
 	loadCurrentUser,
 	loadCurrentUserError,
 	loadCurrentUserSuccess,
@@ -25,6 +29,9 @@ import {
 	updateCurrentUser,
 	updateCurrentUserError,
 	updateCurrentUserSuccess,
+	updateUniqueProduct,
+	updateUniqueProductError,
+	updateUniqueProductSuccess,
 } from './currentUser.actions';
 import { selectCurrentUser } from './currentUser.selectors';
 
@@ -34,6 +41,7 @@ export class CurrentUserEffects {
 		private readonly actions$: Actions,
 		private readonly userService: UserService,
 		private readonly authService: AuthService,
+		private readonly productService: ProductService,
 		private readonly store: Store,
 		private readonly router: Router,
 		private readonly matDialog: MatDialog
@@ -68,7 +76,7 @@ export class CurrentUserEffects {
 		}
 	});
 
-	updateCurrentUSer$ = createEffect(() => {
+	updateCurrentUser$ = createEffect(() => {
 		{
 			return this.actions$.pipe(
 				ofType(updateCurrentUser),
@@ -130,6 +138,45 @@ export class CurrentUserEffects {
 				ignoreElements(),
 				catchError((error) =>
 					of(deleteCurrentUserError({ error: error.message }))
+				)
+			);
+		}
+	});
+
+	updateUniqueProduct$ = createEffect(() => {
+		{
+			return this.actions$.pipe(
+				ofType(updateUniqueProduct),
+				exhaustMap(({ id, payload }) =>
+					this.productService.update(id, payload).pipe(
+						map((product) =>
+							updateUniqueProductSuccess({
+								payload: product,
+							})
+						)
+					)
+				),
+				catchError((error: HttpErrorResponse) =>
+					of(updateUniqueProductError({ error: error.message }))
+				)
+			);
+		}
+	});
+
+	deleteUniqueProduct$ = createEffect(() => {
+		{
+			return this.actions$.pipe(
+				ofType(deleteUniqueProduct),
+				exhaustMap(({ id }) =>
+					this.productService.delete(id).pipe(
+						map(() => {
+							this.matDialog.closeAll();
+							return deleteUniqueProductSuccess({ id });
+						})
+					)
+				),
+				catchError((error: HttpErrorResponse) =>
+					of(deleteUniqueProductError({ error: error.message }))
 				)
 			);
 		}

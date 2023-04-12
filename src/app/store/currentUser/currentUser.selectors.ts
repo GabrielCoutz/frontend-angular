@@ -24,6 +24,16 @@ export const selectCurrentUserEmail = createSelector(
 	(user) => user?.email
 );
 
+export const selectCurrentUserProducts = createSelector(
+	selectCurrentUser,
+	(state) => state?.products
+);
+
+export const selectCurrentUserUniqueProduct = (productId: string) =>
+	createSelector(selectCurrentUserProducts, (products) =>
+		products?.find((product) => product.id === productId)
+	);
+
 export const selectCurrentUserError = createSelector(
 	selectICurrentUserState,
 	(state) => state.error
