@@ -20,6 +20,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MyProductsComponent } from './components/my-products/my-products.component';
 import { EditProductComponent } from './components/edit-product/edit-product.component';
+import { DeleteProductFormComponent } from './components/delete-product-form/delete-product-form.component';
 
 @NgModule({
 	declarations: [
@@ -29,6 +30,7 @@ import { EditProductComponent } from './components/edit-product/edit-product.com
 		DeleteAccountFormComponent,
 		MyProductsComponent,
 		EditProductComponent,
+		DeleteProductFormComponent,
 	],
 	imports: [
 		CommonModule,
