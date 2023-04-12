@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import {
-	IProductDefaultResponse,
+	IProduct,
 	IProductUpdatePayload,
 } from '../../services/product/interface/product-service.interface';
 import { IUserDefaultResponse } from '../../services/user/interface/user-service.interface';
@@ -59,7 +59,7 @@ export const updateUniqueProduct = createAction(
 );
 export const updateUniqueProductSuccess = createAction(
 	'[Unique Product] Update product success',
-	props<{ payload: Omit<IProductDefaultResponse, 'user'> }>()
+	props<{ payload: IProduct }>()
 );
 export const updateUniqueProductError = createAction(
 	'[Unique Product] Update product error',

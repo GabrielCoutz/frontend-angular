@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { IProductUpdateResponse } from '../../../../services/product/interface/product-service.interface';
+import { IProduct } from '../../../../services/product/interface/product-service.interface';
 import { selectCurrentUserProducts } from '../../../../store/currentUser/currentUser.selectors';
 import { DeleteProductFormComponent } from '../delete-product-form/delete-product-form.component';
 
@@ -15,7 +15,7 @@ export class MyProductsComponent {
 
 	products$ = this.store.select(selectCurrentUserProducts);
 
-	deleteProductConfirmation(product: IProductUpdateResponse) {
+	deleteProductConfirmation(product: IProduct) {
 		this.dialog.open(DeleteProductFormComponent, {
 			width: '500px',
 			enterAnimationDuration: 200,
