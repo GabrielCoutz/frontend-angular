@@ -1,7 +1,7 @@
 <section *ngIf="products$ | async as products; else empty" class="container">
 	<ul class="productList">
 		<li *ngFor="let product of products">
-			<mat-card class="example-card">
+			<mat-card>
 				<mat-card-header>
 					<mat-card-title
 						>{{ product.name }} <br />

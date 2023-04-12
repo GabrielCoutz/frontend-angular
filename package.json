@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "lint": "npx eslint \"**/*.{ts, tsx, json}\" --fix",
+    "lint": "npx eslint \"**/*.{ts, json}\" --fix",
     "test": "ng test",
     "test:coverage": "ng test --code-coverage"
   },

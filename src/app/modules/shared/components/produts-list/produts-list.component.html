@@ -2,7 +2,7 @@
 	<ul class="productList">
 		<li *ngFor="let product of products$ | async" class="productItem">
 			<a [routerLink]="['/products', product.id]">
-				<mat-card class="example-card">
+				<mat-card>
 					<mat-card-header>
 						<mat-card-title
 							>{{ product.name }} <br />
