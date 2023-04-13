@@ -18,6 +18,7 @@ import {
 	tap,
 	ignoreElements,
 } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class CurrentUserEffects {
@@ -28,7 +29,8 @@ export class CurrentUserEffects {
 		private readonly productService: ProductService,
 		private readonly store: Store,
 		private readonly router: Router,
-		private readonly matDialog: MatDialog
+		private readonly matDialog: MatDialog,
+		private readonly matSnackbar: MatSnackBar
 	) {}
 
 	loadCurrentUser$ = createEffect(() => {
@@ -66,11 +68,16 @@ export class CurrentUserEffects {
 				ofType(CurrentUserActions.updateCurrentUser),
 				exhaustMap(({ id, payload }) =>
 					this.userService.update(id, payload).pipe(
-						map((user) =>
-							CurrentUserActions.updateCurrentUserSuccess({
+						map((user) => {
+							this.matSnackbar.open('Dados atualizados', 'ok', {
+								horizontalPosition: 'center',
+								verticalPosition: 'top',
+								panelClass: ['custom-snackbar', 'success'],
+							});
+							return CurrentUserActions.updateCurrentUserSuccess({
 								payload: user,
-							})
-						),
+							});
+						}),
 
 						catchError((error: HttpErrorResponse) =>
 							of(
@@ -131,8 +138,14 @@ export class CurrentUserEffects {
 					CurrentUserActions.deleteCurrentUserSuccess,
 					CurrentUserActions.logoutCurrentUser
 				),
-				tap(() => {
+				tap((action) => {
 					localStorage.removeItem('token');
+					if (action.type === '[CurrentUser] delete user success')
+						this.matSnackbar.open('Conta deletada com sucesso!', 'ok', {
+							horizontalPosition: 'center',
+							verticalPosition: 'top',
+							panelClass: ['custom-snackbar', 'success'],
+						});
 					this.matDialog.closeAll();
 					this.router.navigate(['account/signin']);
 				}),
@@ -152,11 +165,16 @@ export class CurrentUserEffects {
 				ofType(CurrentUserActions.updateUniqueProduct),
 				exhaustMap(({ id, payload }) =>
 					this.productService.update(id, payload).pipe(
-						map((product) =>
-							CurrentUserActions.updateUniqueProductSuccess({
+						map((product) => {
+							this.matSnackbar.open('Produto atualizado!', 'ok', {
+								horizontalPosition: 'center',
+								verticalPosition: 'top',
+								panelClass: ['custom-snackbar', 'success'],
+							});
+							return CurrentUserActions.updateUniqueProductSuccess({
 								payload: product,
-							})
-						)
+							});
+						})
 					)
 				),
 				catchError((error: HttpErrorResponse) =>
@@ -178,6 +196,11 @@ export class CurrentUserEffects {
 					this.productService.delete(id).pipe(
 						map(() => {
 							this.matDialog.closeAll();
+							this.matSnackbar.open('Produto deletado com sucesso!', 'ok', {
+								horizontalPosition: 'center',
+								verticalPosition: 'top',
+								panelClass: ['custom-snackbar', 'success'],
+							});
 							return CurrentUserActions.deleteUniqueProductSuccess({ id });
 						})
 					)

@@ -4,7 +4,7 @@ import {
 	selectAllProducts,
 	selectProductError,
 	selectProductLoading,
-} from '../../../../store/product/product.selectors';
+} from '../../../../store/products/products.selectors';
 
 @Component({
 	selector: 'app-produts-list',

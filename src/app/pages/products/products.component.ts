@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadProducts } from '../../store/product/product.actions';
+import { loadProducts } from '../../store/products/products.actions';
 
 @Component({
 	selector: 'app-products',

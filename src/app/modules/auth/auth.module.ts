@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthService } from '../../../app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
 	declarations: [
 		SignupComponent,
@@ -32,6 +33,7 @@ import { UserService } from 'src/app/services/user/user.service';
 		MatInputModule,
 		MatIconModule,
 		MatButtonModule,
+		MatSnackBarModule,
 	],
 	providers: [AuthService, UserService],
 })
