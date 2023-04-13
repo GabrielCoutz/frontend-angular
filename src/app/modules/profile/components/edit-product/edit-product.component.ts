@@ -2,9 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { IProductCreatePayload } from '../../../../services/product/interface/product-service.interface';
+import { IProductUpdatePayload } from '../../../../services/product/interface/product-service.interface';
 import { updateUniqueProduct } from '../../../../store/currentUser/currentUser.actions';
-import { selectCurrentUserUniqueProduct } from '../../../../store/currentUser/currentUser.selectors';
+import {
+	selectCurrentUserLoading,
+	selectCurrentUserUniqueProduct,
+} from '../../../../store/currentUser/currentUser.selectors';
 
 @Component({
 	selector: 'app-edit-product',
@@ -26,13 +29,14 @@ export class EditProductComponent {
 		name: ['', [Validators.required]],
 		price: ['', [Validators.required, Validators.min(0)]],
 	});
+	loading$ = this.store.select(selectCurrentUserLoading);
 
 	submit() {
 		const productUpdateDto = {
 			name: this.myProductForm.value.name as string,
-			price: Number(this.myProductForm.value.price?.replace(',', '.')),
+			price: this.myProductForm.value.price,
 			description: this.myProductForm.value.description as string,
-		};
+		} as IProductUpdatePayload;
 
 		this.store.dispatch(
 			updateUniqueProduct({

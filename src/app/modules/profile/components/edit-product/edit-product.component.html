@@ -42,8 +42,12 @@
 		[matTooltipDisabled]="!myProductForm.invalid"
 		matTooltipPosition="above"
 	>
-		<button mat-flat-button color="primary" [disabled]="myProductForm.invalid">
-			Atualizar
+		<button
+			mat-flat-button
+			color="primary"
+			[disabled]="myProductForm.invalid || (loading$ | async)"
+		>
+			{{ (loading$ | async) ? "Carregando..." : "Atualizar" }}
 		</button>
 	</div>
 </form>
