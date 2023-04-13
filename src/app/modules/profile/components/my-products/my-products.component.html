@@ -1,3 +1,9 @@
+<section class="container addProductWrapper">
+	<button mat-raised-button color="primary" [routerLink]="['create']">
+		Anunciar produto
+	</button>
+</section>
+
 <section *ngIf="products$ | async as products; else empty" class="container">
 	<ul class="productList">
 		<li *ngFor="let product of products">

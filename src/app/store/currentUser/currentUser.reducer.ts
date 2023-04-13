@@ -160,6 +160,42 @@ export const currentUserReducer = createReducer(
 		})
 	),
 	on(
+		CurrentUserActions.createUniqueProduct,
+		(state): ICurrentUserState => ({
+			...state,
+			error: null,
+			isLoading: true,
+		})
+	),
+	on(
+		CurrentUserActions.createUniqueProductSuccess,
+		(state, { payload }): ICurrentUserState => {
+			const updatedProducts = [...(state.user?.products || [])];
+
+			updatedProducts.push(payload);
+
+			const updatedUser = {
+				...state.user,
+				products: updatedProducts,
+			} as IUserDefaultResponse;
+
+			return {
+				...state,
+				error: null,
+				isLoading: false,
+				user: updatedUser,
+			};
+		}
+	),
+	on(
+		CurrentUserActions.createUniqueProductError,
+		(state, { error }): ICurrentUserState => ({
+			...state,
+			error,
+			isLoading: false,
+		})
+	),
+	on(
 		CurrentUserActions.logoutCurrentUser,
 		(state): ICurrentUserState => ({
 			...state,
