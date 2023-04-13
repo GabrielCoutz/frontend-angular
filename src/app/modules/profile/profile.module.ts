@@ -32,7 +32,7 @@ import { CreateProductFormComponent } from './components/create-product-form/cre
 		MyProductsComponent,
 		EditProductComponent,
 		DeleteProductFormComponent,
-  CreateProductFormComponent,
+		CreateProductFormComponent,
 	],
 	imports: [
 		CommonModule,
