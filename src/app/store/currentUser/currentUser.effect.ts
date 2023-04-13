@@ -19,6 +19,7 @@ import {
 	ignoreElements,
 } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Location } from '@angular/common';
 
 @Injectable()
 export class CurrentUserEffects {
@@ -29,6 +30,7 @@ export class CurrentUserEffects {
 		private readonly productService: ProductService,
 		private readonly store: Store,
 		private readonly router: Router,
+		private readonly location: Location,
 		private readonly matDialog: MatDialog,
 		private readonly matSnackbar: MatSnackBar
 	) {}
@@ -153,6 +155,36 @@ export class CurrentUserEffects {
 				catchError((error) =>
 					of(
 						CurrentUserActions.deleteCurrentUserError({ error: error.message })
+					)
+				)
+			);
+		}
+	});
+
+	createUniqueProduct$ = createEffect(() => {
+		{
+			return this.actions$.pipe(
+				ofType(CurrentUserActions.createUniqueProduct),
+				exhaustMap(({ payload }) =>
+					this.productService.create(payload).pipe(
+						map((product) => {
+							this.matSnackbar.open('Produto criado com sucesso', 'ok', {
+								horizontalPosition: 'center',
+								verticalPosition: 'top',
+								panelClass: ['custom-snackbar', 'success'],
+							});
+							this.location.back();
+							return CurrentUserActions.createUniqueProductSuccess({
+								payload: product,
+							});
+						})
+					)
+				),
+				catchError((error: HttpErrorResponse) =>
+					of(
+						CurrentUserActions.createUniqueProductError({
+							error: error.message,
+						})
 					)
 				)
 			);
