@@ -2,20 +2,7 @@
 	<ul class="productList">
 		<li *ngFor="let product of products$ | async" class="productItem">
 			<a [routerLink]="['/products', product.id]">
-				<mat-card>
-					<mat-card-header>
-						<mat-card-title
-							>{{ product.name }} <br />
-							{{ product.price | currencyBr }}</mat-card-title
-						>
-						<mat-card-subtitle
-							>vendido por: {{ product.user.name }}</mat-card-subtitle
-						>
-					</mat-card-header>
-					<mat-card-content>
-						<p>{{ product.description }}</p>
-					</mat-card-content>
-				</mat-card>
+				<app-card [product]="product"></app-card>
 			</a>
 		</li>
 	</ul>
