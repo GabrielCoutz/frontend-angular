@@ -1,26 +1,16 @@
-<section class="container addProductWrapper">
+<section
+	class="container addProductWrapper"
+	*ngIf="(products$ | async)?.length"
+>
 	<button mat-raised-button color="primary" [routerLink]="['create']">
 		Anunciar produto
 	</button>
 </section>
 
-<section *ngIf="products$ | async as products; else empty" class="container">
+<section *ngIf="products$ | async as products" class="container">
 	<ul class="productList">
 		<li *ngFor="let product of products">
-			<mat-card>
-				<mat-card-header>
-					<mat-card-title
-						>{{ product.name }} <br />
-						{{ product.price | currencyBr }}</mat-card-title
-					>
-					<mat-card-subtitle
-						>Anunciado em:
-						{{ product.created_at | date : "dd/MM/yyyy" }}</mat-card-subtitle
-					>
-				</mat-card-header>
-				<mat-card-content>
-					<p>{{ product.description }}</p>
-				</mat-card-content>
+			<app-card [product]="product">
 				<mat-card-actions align="end">
 					<a
 						mat-icon-button
@@ -37,13 +27,17 @@
 						<mat-icon>delete</mat-icon>
 					</button>
 				</mat-card-actions>
-			</mat-card>
+			</app-card>
 		</li>
 	</ul>
 </section>
 
-<ng-template #empty>
-	<h1>Você não possui anúncios</h1>
-</ng-template>
+<section *ngIf="!(products$ | async)?.length" class="emptyProducts">
+	<h3>Você ainda não possui anúncios.</h3>
+	<p>Que tal criar um agora mesmo?</p>
+	<button mat-raised-button color="primary" [routerLink]="['create']">
+		Anunciar produto
+	</button>
+</section>
 
 <router-outlet></router-outlet>
