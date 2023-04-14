@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { enviroments } from '../../enviroments/enviroments.dev';
 import { loadCurrentUser } from '../../store/currentUser/currentUser.actions';
 import {
 	IAuthService,
@@ -17,18 +18,23 @@ export class AuthService {
 		private readonly request: HttpClient,
 		private readonly store: Store
 	) {}
-	private readonly apiUrl = 'http://localhost:3000/auth';
 
 	signin(payload: ISigninPayload): Observable<IAuthService> {
-		return this.request.post<IAuthService>(`${this.apiUrl}/login`, payload);
+		return this.request.post<IAuthService>(
+			enviroments.AUTH_ENDPOINTS.SIGNIN,
+			payload
+		);
 	}
 
 	validate(token: string): Observable<IValidateRespose> {
-		return this.request.get<IValidateRespose>(`${this.apiUrl}/validate`, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		return this.request.get<IValidateRespose>(
+			enviroments.AUTH_ENDPOINTS.VALIDATE,
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
 	}
 
 	autoLogin() {

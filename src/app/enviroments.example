@@ -1,0 +1,10 @@
+const BASE_API_URL = 'your_base_url';
+
+export const enviroment = {
+	AUTH_ENDPOINTS: {
+		SIGNIN: 'your_endpoint_here',
+		VALIDATE: 'your_endpoint_here',
+	},
+	USER_ENDPOINT: 'your_endpoint_here',
+	PRODUCT_ENDPOINT: 'your_endpoint_here',
+};
