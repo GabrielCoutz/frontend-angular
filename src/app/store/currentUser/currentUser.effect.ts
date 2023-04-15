@@ -136,18 +136,14 @@ export class CurrentUserEffects {
 	deleteCurrentUserSuccess$ = createEffect(() => {
 		{
 			return this.actions$.pipe(
-				ofType(
-					CurrentUserActions.deleteCurrentUserSuccess,
-					CurrentUserActions.logoutCurrentUser
-				),
-				tap((action) => {
+				ofType(CurrentUserActions.deleteCurrentUserSuccess),
+				tap(() => {
 					localStorage.removeItem('token');
-					if (action.type === '[CurrentUser] delete user success')
-						this.matSnackbar.open('Conta deletada com sucesso!', 'ok', {
-							horizontalPosition: 'center',
-							verticalPosition: 'top',
-							panelClass: ['custom-snackbar', 'success'],
-						});
+					this.matSnackbar.open('Conta deletada com sucesso!', 'ok', {
+						horizontalPosition: 'center',
+						verticalPosition: 'top',
+						panelClass: ['custom-snackbar', 'success'],
+					});
 					this.matDialog.closeAll();
 					this.router.navigate(['account/signin']);
 				}),
@@ -160,6 +156,22 @@ export class CurrentUserEffects {
 			);
 		}
 	});
+
+	logoutCurrentUser$ = createEffect(
+		() => {
+			{
+				return this.actions$.pipe(
+					ofType(CurrentUserActions.logoutCurrentUser),
+					tap(() => {
+						localStorage.removeItem('token');
+						this.matDialog.closeAll();
+						this.router.navigate(['account/signin']);
+					})
+				);
+			}
+		},
+		{ dispatch: false }
+	);
 
 	createUniqueProduct$ = createEffect(() => {
 		{
