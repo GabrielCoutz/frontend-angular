@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { IProductUpdatePayload } from '../../../../services/product/interface/product-service.interface';
 import { updateUniqueProduct } from '../../../../store/currentUser/currentUser.actions';
 import {
 	selectCurrentUserLoading,
