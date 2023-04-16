@@ -32,11 +32,13 @@ export class EditProductComponent {
 	loading$ = this.store.select(selectCurrentUserLoading);
 
 	submit() {
+		if (this.myProductForm.invalid) return;
+
 		const productUpdateDto = {
 			name: this.myProductForm.value.name as string,
-			price: this.myProductForm.value.price,
+			price: Number(this.myProductForm.value.price),
 			description: this.myProductForm.value.description as string,
-		} as IProductUpdatePayload;
+		};
 
 		this.store.dispatch(
 			updateUniqueProduct({
