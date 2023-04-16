@@ -12,8 +12,9 @@ import {
 	authUserTokenPayload,
 } from './auth.service.mocks';
 
-import { throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { loadCurrentUser } from '../../store/currentUser/currentUser.actions';
 
 describe('AuthService', () => {
 	let httpTestingController: HttpTestingController;
@@ -91,6 +92,36 @@ describe('AuthService', () => {
 			});
 
 			done();
+		});
+	});
+
+	describe('Auto login', () => {
+		beforeEach(() => {
+			localStorage.clear();
+			localStorage.setItem('token', '123');
+		});
+
+		it('should dispatch loadCurrentUser if token is valid', () => {
+			spyOn(authService, 'validate').and.returnValue(of({ id: '123' }));
+			spyOn(store, 'dispatch').and.callThrough();
+
+			authService.autoLogin();
+
+			expect(authService.validate).toHaveBeenCalledWith('123');
+			expect(store.dispatch).toHaveBeenCalledWith(
+				loadCurrentUser({ id: '123' })
+			);
+		});
+
+		it('should not call any methods if token not exist', () => {
+			spyOn(authService, 'validate').and.callThrough();
+			spyOn(store, 'dispatch').and.callThrough();
+			localStorage.clear();
+
+			authService.autoLogin();
+
+			expect(authService.validate).not.toHaveBeenCalled();
+			expect(store.dispatch).not.toHaveBeenCalled();
 		});
 	});
 });
