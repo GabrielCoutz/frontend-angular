@@ -10,22 +10,26 @@ import { userCreatePayload, userExpectPayload } from './user.service.mocks';
 import { of, throwError } from 'rxjs';
 import { authUserTokenExpect } from '../auth/auth.service.mocks';
 import { AuthService } from '../auth/auth.service';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('UserService', () => {
 	let httpTestingController: HttpTestingController;
 	let userService: UserService;
 	let httpClient: HttpClient;
 	let authService: AuthService;
+	let store: MockStore;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [HttpClientTestingModule],
+			providers: [provideMockStore()],
 		});
 
 		httpTestingController = TestBed.inject(HttpTestingController);
 		userService = TestBed.inject(UserService);
 		authService = TestBed.inject(AuthService);
 		httpClient = TestBed.inject(HttpClient);
+		store = TestBed.inject(MockStore);
 	});
 
 	afterEach(() => {

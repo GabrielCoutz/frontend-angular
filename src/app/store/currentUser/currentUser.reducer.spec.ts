@@ -9,6 +9,7 @@ const userMock = {
 	email: 'user@example.com',
 	id: '123',
 	name: 'user',
+	products: [],
 };
 
 const newUserMock = {
@@ -16,6 +17,7 @@ const newUserMock = {
 	email: 'updated.user@example.com',
 	id: '123',
 	name: 'user updated',
+	products: [],
 };
 
 const userErrorMock = 'cannot complete this action';

@@ -5,19 +5,15 @@ import {
 } from '@angular/common/http/testing';
 
 import { ProductService } from './product.service';
-import { HttpClient } from '@angular/common/http';
 import {
 	productCreatePayload,
 	productExpectPayload,
 	productUpdatePayload,
 } from './product.service.mocks';
-import { of, throwError } from 'rxjs';
-import { authUserTokenExpect } from '../auth/auth.service.mocks';
-import { AuthService } from '../auth/auth.service';
+import { throwError } from 'rxjs';
 
 describe('ProductService', () => {
 	let httpTestingController: HttpTestingController;
-	let httpClient: HttpClient;
 	let productService: ProductService;
 
 	beforeEach(() => {
@@ -27,7 +23,6 @@ describe('ProductService', () => {
 
 		httpTestingController = TestBed.inject(HttpTestingController);
 		productService = TestBed.inject(ProductService);
-		httpClient = TestBed.inject(HttpClient);
 	});
 
 	afterEach(() => {

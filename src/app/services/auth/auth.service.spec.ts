@@ -13,20 +13,24 @@ import {
 } from './auth.service.mocks';
 
 import { throwError } from 'rxjs';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('AuthService', () => {
 	let httpTestingController: HttpTestingController;
 	let httpClient: HttpClient;
 	let authService: AuthService;
+	let store: MockStore;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [HttpClientTestingModule],
+			providers: [provideMockStore()],
 		});
 
 		httpTestingController = TestBed.inject(HttpTestingController);
 		httpClient = TestBed.inject(HttpClient);
 		authService = TestBed.inject(AuthService);
+		store = TestBed.inject(MockStore);
 	});
 
 	afterEach(() => {

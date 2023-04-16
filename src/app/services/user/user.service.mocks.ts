@@ -9,4 +9,5 @@ export const userExpectPayload = {
 	email: 'expect@example.com',
 	name: 'User expected',
 	created_at: 'dd/mm/yyyy',
+	products: [],
 };

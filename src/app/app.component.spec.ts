@@ -1,3 +1,8 @@
+import { HttpClient } from '@angular/common/http';
+import {
+	HttpClientTestingModule,
+	HttpTestingController,
+} from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -10,11 +15,14 @@ import { HomeModule } from './modules/home/home.module';
 
 describe('AppComponent', () => {
 	let store: MockStore;
+	let httpTestingController: HttpTestingController;
+	let httpClient: HttpClient;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			imports: [
 				RouterTestingModule,
+				HttpClientTestingModule,
 				HomeModule,
 				MatIconModule,
 				MatToolbarModule,
@@ -24,7 +32,13 @@ describe('AppComponent', () => {
 			providers: [provideMockStore()],
 		}).compileComponents();
 
+		httpTestingController = TestBed.inject(HttpTestingController);
+		httpClient = TestBed.inject(HttpClient);
 		store = TestBed.inject(MockStore);
+	});
+
+	afterEach(() => {
+		httpTestingController.verify();
 	});
 
 	it('should create the app', () => {
