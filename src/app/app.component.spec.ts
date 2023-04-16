@@ -1,8 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import {
-	HttpClientTestingModule,
-	HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -12,38 +8,44 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeModule } from './modules/home/home.module';
+import { AuthService } from './services/auth/auth.service';
 
 describe('AppComponent', () => {
 	let store: MockStore;
-	let httpTestingController: HttpTestingController;
-	let httpClient: HttpClient;
+	let authService: AuthService;
+	let appComponent: AppComponent;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			imports: [
-				RouterTestingModule,
-				HttpClientTestingModule,
 				HomeModule,
 				MatIconModule,
 				MatToolbarModule,
 				MatMenuModule,
+				HttpClientTestingModule,
+				RouterTestingModule,
 			],
 			declarations: [AppComponent, HeaderComponent],
 			providers: [provideMockStore()],
 		}).compileComponents();
 
-		httpTestingController = TestBed.inject(HttpTestingController);
-		httpClient = TestBed.inject(HttpClient);
 		store = TestBed.inject(MockStore);
-	});
-
-	afterEach(() => {
-		httpTestingController.verify();
+		authService = TestBed.inject(AuthService);
+		const fixture = TestBed.createComponent(AppComponent);
+		appComponent = fixture.componentInstance;
 	});
 
 	it('should create the app', () => {
-		const fixture = TestBed.createComponent(AppComponent);
-		const app = fixture.componentInstance;
-		expect(app).toBeTruthy();
+		expect(appComponent).toBeTruthy();
+	});
+
+	describe('On init', () => {
+		it('should call autoLogin from AuthService', () => {
+			spyOn(authService, 'autoLogin');
+
+			appComponent.ngOnInit();
+
+			expect(authService.autoLogin).toHaveBeenCalled();
+		});
 	});
 });
