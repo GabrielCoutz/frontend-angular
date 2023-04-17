@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
-import { deleteCurrentUser } from '../../../../store/currentUser/currentUser.actions';
+import {
+	clearCurrentUserError,
+	deleteCurrentUser,
+} from '../../../../store/currentUser/currentUser.actions';
 import {
 	selectCurrentUserEmail,
 	selectCurrentUserError,
@@ -45,5 +48,9 @@ export class DeleteAccountFormComponent {
 				this.store.dispatch(deleteCurrentUser({ id, payload: deleteUserDto }));
 			}
 		);
+	}
+
+	clearCurrentUserErrors() {
+		this.store.dispatch(clearCurrentUserError());
 	}
 }
