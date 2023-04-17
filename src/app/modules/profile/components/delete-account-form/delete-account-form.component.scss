@@ -4,9 +4,20 @@ section {
 
 	form {
 		margin: 1rem 0;
+
+		mat-error {
+			margin-bottom: 1rem;
+			justify-content: center;
+		}
 	}
 
-	.buttonWrapper, .buttonWrapper button {
+	.buttonWrapper,
+	.buttonWrapper button,
+	button {
 		width: 100%;
+	}
+
+	.buttonWrapper {
+		margin-bottom: 1rem;
 	}
 }
