@@ -1,21 +1,3 @@
-@use "/src/assets/scss/mixins.scss" as mixins;
-
 .form {
 	max-width: 400px;
-	margin: 5rem auto;
-
-	@include mixins.device(small) {
-		width: 100%;
-		max-width: none;
-	}
-
-	mat-error {
-		display: flex;
-		align-items: center;
-		gap: 6px;
-	}
-
-	.error {
-		margin: 0 auto;
-	}
 }

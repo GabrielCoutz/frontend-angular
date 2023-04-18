@@ -7,6 +7,7 @@ export const userInitialStateMock: ICurrentUserState = {
 		email: 'user@example.com',
 		id: '123',
 		name: 'John',
+		products: [],
 	},
 	isLoading: false,
 	error: null,

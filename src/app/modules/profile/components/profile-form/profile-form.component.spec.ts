@@ -13,7 +13,7 @@ import {
 	updateCurrentUser,
 } from '../../../../store/currentUser/currentUser.actions';
 import { userInitialStateMock } from '../../../../store/currentUser/currentUser.selectors.spec';
-import { IUsersState } from '../../../../store/users/user.state';
+import { IUsersState } from '../../../../store/users/users.state';
 import {
 	selectCurrentUser,
 	selectCurrentUserError,
@@ -91,7 +91,7 @@ describe('ProfileFormComponent', () => {
 			const result = selectCurrentUserError.projector({
 				error: 'Any error',
 				isLoading: false,
-				user: null,
+				user: undefined,
 			});
 
 			expect(store.dispatch).toHaveBeenCalled();

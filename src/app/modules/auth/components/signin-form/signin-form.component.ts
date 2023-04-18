@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../../app/services/auth/auth.service';
 
@@ -12,7 +13,8 @@ export class SigninFormComponent {
 	constructor(
 		private readonly formBuilder: FormBuilder,
 		private readonly authService: AuthService,
-		private readonly router: Router
+		private readonly router: Router,
+		private readonly matSnackbar: MatSnackBar
 	) {}
 
 	signinForm = this.formBuilder.group({
@@ -37,8 +39,13 @@ export class SigninFormComponent {
 			next: (response) => {
 				this.loading = false;
 
+				this.matSnackbar.open('Logado com sucesso!', 'ok', {
+					horizontalPosition: 'center',
+					verticalPosition: 'top',
+					panelClass: ['custom-snackbar', 'success'],
+				});
 				localStorage.setItem('token', response.token);
-				this.router.navigate(['/profile', response.id]);
+				this.router.navigate(['/profile', response.id, 'edit']);
 			},
 			error: () => {
 				this.loading = false;

@@ -1,0 +1,26 @@
+.addProductWrapper {
+	display: flex;
+	justify-content: center;
+	margin-top: 1rem;
+}
+
+.productList {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	margin-top: 3rem;
+
+	li {
+		max-width: 400px;
+		width: 100%;
+	}
+}
+
+.emptyProducts {
+	h3 {
+		font-size: 1.325rem;
+	}
+	text-align: center;
+	margin: 1rem;
+}

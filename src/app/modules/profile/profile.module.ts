@@ -17,6 +17,11 @@ import { DangerZoneComponent } from './components/danger-zone/danger-zone.compon
 import { DeleteAccountFormComponent } from './components/delete-account-form/delete-account-form.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MyProductsComponent } from './components/my-products/my-products.component';
+import { EditProductComponent } from './components/edit-product/edit-product.component';
+import { DeleteProductFormComponent } from './components/delete-product-form/delete-product-form.component';
+import { CreateProductFormComponent } from './components/create-product-form/create-product-form.component';
 
 @NgModule({
 	declarations: [
@@ -24,6 +29,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 		ProfileFormComponent,
 		DangerZoneComponent,
 		DeleteAccountFormComponent,
+		MyProductsComponent,
+		EditProductComponent,
+		DeleteProductFormComponent,
+		CreateProductFormComponent,
 	],
 	imports: [
 		CommonModule,
@@ -39,6 +48,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 		MatExpansionModule,
 		MatDialogModule,
 		MatTooltipModule,
+		MatTabsModule,
 	],
 	providers: [UserService],
 })

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { loadUsers, loadUsersError, loadUsersSuccess } from './user.actions';
-import { IUsersState } from './user.state';
+import * as UserActions from './users.actions';
+import { IUsersState } from './users.state';
 
 export const initialState: IUsersState = {
 	user: [],
@@ -11,7 +11,7 @@ export const initialState: IUsersState = {
 export const userReducer = createReducer(
 	initialState,
 	on(
-		loadUsers,
+		UserActions.loadUsers,
 		(state: IUsersState): IUsersState => ({
 			...state,
 			isLoading: true,
@@ -20,7 +20,7 @@ export const userReducer = createReducer(
 		})
 	),
 	on(
-		loadUsersSuccess,
+		UserActions.loadUsersSuccess,
 		(state: IUsersState, { payload }): IUsersState => ({
 			...state,
 			user: payload,
@@ -29,7 +29,7 @@ export const userReducer = createReducer(
 		})
 	),
 	on(
-		loadUsersError,
+		UserActions.loadUsersError,
 		(state: IUsersState, { error }): IUsersState => ({
 			...state,
 			user: [],

@@ -20,6 +20,11 @@ const routes: Routes = [
 			(await import('./modules/profile/profile.module')).ProfileModule,
 		canActivate: [ProfileGuard],
 	},
+	{
+		path: 'products',
+		loadChildren: async () =>
+			(await import('./modules/product/product.module')).ProductModule,
+	},
 ];
 
 @NgModule({

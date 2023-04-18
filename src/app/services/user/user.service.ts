@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { enviroments } from '../../enviroments/enviroments.dev';
 import {
 	IUserCreatePayload,
 	IUserCreateResponse,
@@ -13,17 +14,18 @@ import {
 })
 export class UserService {
 	constructor(private readonly request: HttpClient) {}
-	private readonly apiUrl = 'http://localhost:3000';
 
 	create(payload: IUserCreatePayload): Observable<IUserCreateResponse> {
 		return this.request.post<IUserCreateResponse>(
-			`${this.apiUrl}/users`,
+			enviroments.USER_ENDPOINT,
 			payload
 		);
 	}
 
 	get(id: string): Observable<IUserDefaultResponse> {
-		return this.request.get<IUserDefaultResponse>(`${this.apiUrl}/users/${id}`);
+		return this.request.get<IUserDefaultResponse>(
+			`${enviroments.USER_ENDPOINT}/${id}`
+		);
 	}
 
 	update(
@@ -33,7 +35,7 @@ export class UserService {
 		const token = localStorage.getItem('token');
 
 		return this.request.patch<IUserDefaultResponse>(
-			`${this.apiUrl}/users/${id}`,
+			`${enviroments.USER_ENDPOINT}/${id}`,
 			payload,
 			{
 				headers: {
@@ -46,7 +48,7 @@ export class UserService {
 	delete(id: string): Observable<object> {
 		const token = localStorage.getItem('token');
 
-		return this.request.delete(`${this.apiUrl}/users/${id}`, {
+		return this.request.delete(`${enviroments.USER_ENDPOINT}/${id}`, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
@@ -54,6 +56,6 @@ export class UserService {
 	}
 
 	getAll(): Observable<IUserDefaultResponse[]> {
-		return this.request.get<IUserDefaultResponse[]>(`${this.apiUrl}/users`);
+		return this.request.get<IUserDefaultResponse[]>(enviroments.USER_ENDPOINT);
 	}
 }

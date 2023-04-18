@@ -1,10 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import {
-	loadProducts,
-	loadProductsError,
-	loadProductsSuccess,
-} from './product.actions';
-import { IProductState } from './product.state';
+import * as ProductActions from './products.actions';
+import { IProductState } from './products.state';
 
 const initialState: IProductState = {
 	products: [],
@@ -15,7 +11,7 @@ const initialState: IProductState = {
 export const productsReducer = createReducer(
 	initialState,
 	on(
-		loadProducts,
+		ProductActions.loadProducts,
 		(state): IProductState => ({
 			...state,
 			products: [],
@@ -24,7 +20,7 @@ export const productsReducer = createReducer(
 		})
 	),
 	on(
-		loadProductsSuccess,
+		ProductActions.loadProductsSuccess,
 		(state, { payload }): IProductState => ({
 			...state,
 			products: payload,
@@ -33,7 +29,7 @@ export const productsReducer = createReducer(
 		})
 	),
 	on(
-		loadProductsError,
+		ProductActions.loadProductsError,
 		(state, { error }): IProductState => ({
 			...state,
 			products: [],

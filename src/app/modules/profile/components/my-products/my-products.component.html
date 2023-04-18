@@ -1,0 +1,43 @@
+<section
+	class="container addProductWrapper"
+	*ngIf="(products$ | async)?.length"
+>
+	<button mat-raised-button color="primary" [routerLink]="['create']">
+		Anunciar produto
+	</button>
+</section>
+
+<section *ngIf="products$ | async as products" class="container">
+	<ul class="productList">
+		<li *ngFor="let product of products">
+			<app-card [product]="product">
+				<mat-card-actions align="end">
+					<a
+						mat-icon-button
+						matTooltip="Editar"
+						[routerLink]="['edit', product.id]"
+					>
+						<mat-icon>edit</mat-icon>
+					</a>
+					<button
+						mat-icon-button
+						matTooltip="Deletar"
+						(click)="deleteProductConfirmation(product)"
+					>
+						<mat-icon>delete</mat-icon>
+					</button>
+				</mat-card-actions>
+			</app-card>
+		</li>
+	</ul>
+</section>
+
+<section *ngIf="!(products$ | async)?.length" class="emptyProducts">
+	<h3>Você ainda não possui anúncios.</h3>
+	<p>Que tal criar um agora mesmo?</p>
+	<button mat-raised-button color="primary" [routerLink]="['create']">
+		Anunciar produto
+	</button>
+</section>
+
+<router-outlet></router-outlet>

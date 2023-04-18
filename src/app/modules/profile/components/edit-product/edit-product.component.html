@@ -1,0 +1,53 @@
+<section class="container">
+	<a mat-flat-button routerLink="../..">Voltar</a>
+</section>
+
+<form
+	[formGroup]="myProductForm"
+	(ngSubmit)="submit()"
+	class="form mat-elevation-z1"
+>
+	<mat-form-field appearance="outline">
+		<mat-label>Nome</mat-label>
+		<input matInput formControlName="name" type="text" required />
+		<mat-error>
+			<mat-icon>error_outline</mat-icon>
+			Insira um nome
+		</mat-error>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>Preço</mat-label>
+		<span matPrefix>R$ &nbsp;</span>
+		<input matInput formControlName="price" type="number" required min="0" />
+		<mat-error>
+			<mat-icon>error_outline</mat-icon>
+			Insira um preço
+		</mat-error>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline">
+		<mat-label>Descrição</mat-label>
+		<textarea
+			matInput
+			formControlName="description"
+			type="text"
+			rows="4"
+		></textarea>
+	</mat-form-field>
+
+	<div
+		class="buttonWrapper"
+		matTooltip="Verifique os campos!"
+		[matTooltipDisabled]="!myProductForm.invalid"
+		matTooltipPosition="above"
+	>
+		<button
+			mat-flat-button
+			color="primary"
+			[disabled]="myProductForm.invalid || (loading$ | async)"
+		>
+			{{ (loading$ | async) ? "Carregando..." : "Atualizar" }}
+		</button>
+	</div>
+</form>

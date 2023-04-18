@@ -16,6 +16,7 @@ export class DangerZoneComponent {
 			enterAnimationDuration: 200,
 			exitAnimationDuration: 200,
 			hasBackdrop: true,
+			disableClose: true,
 		});
 	}
 }

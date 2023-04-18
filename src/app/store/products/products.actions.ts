@@ -10,5 +10,3 @@ export const loadProductsError = createAction(
 	'[Products List] Load products error',
 	props<{ error: string }>()
 );
-
-export const getAllProducts = createAction('[Products List] Get all products');

@@ -5,9 +5,7 @@
 		[formGroup]="deleteAccountForm"
 		(ngSubmit)="submit()"
 		class="deleteAccountForm"
-		fxLayout="column"
 		fxFlexAlign="center"
-		fxLayoutGap="16px"
 		autocomplete="on"
 	>
 		<mat-form-field appearance="outline">
@@ -54,7 +52,12 @@
 				{{ (loading$ | async) ? "Carregando..." : "Deletar conta" }}
 			</button>
 		</div>
-		<button mat-raised-button mat-dialog-close color="primary">
+		<button
+			mat-raised-button
+			mat-dialog-close
+			color="primary"
+			(click)="clearCurrentUserErrors()"
+		>
 			Mudei de ideia
 		</button>
 	</form>

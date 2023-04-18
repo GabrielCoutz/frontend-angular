@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -12,7 +13,8 @@ export class SignupFormComponent {
 	constructor(
 		private readonly formBuilder: FormBuilder,
 		private readonly userService: UserService,
-		private readonly router: Router
+		private readonly router: Router,
+		private readonly matSnackbar: MatSnackBar
 	) {}
 
 	signupForm = this.formBuilder.group({
@@ -37,6 +39,11 @@ export class SignupFormComponent {
 
 		this.userService.create(createUserDto).subscribe({
 			next: () => {
+				this.matSnackbar.open('Conta criada com sucesso!', 'ok', {
+					horizontalPosition: 'center',
+					verticalPosition: 'top',
+					panelClass: ['custom-snackbar', 'success'],
+				});
 				this.router.navigate(['/account/signin']);
 			},
 			error: () => {

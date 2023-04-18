@@ -7,6 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of, throwError } from 'rxjs';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { authUserResponse } from '../../../../services/auth/auth.service.mocks';
@@ -22,6 +23,7 @@ describe('SigninFormComponent', () => {
 	let httpClient: HttpClient;
 	let authService: AuthService;
 	let router: Router;
+	let store: MockStore;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
@@ -32,6 +34,7 @@ describe('SigninFormComponent', () => {
 				BrowserAnimationsModule,
 				RouterTestingModule,
 			],
+			providers: [provideMockStore()],
 		}).compileComponents();
 
 		httpTestingController = TestBed.inject(HttpTestingController);
@@ -39,6 +42,8 @@ describe('SigninFormComponent', () => {
 		router = TestBed.inject(Router);
 		httpClient = TestBed.inject(HttpClient);
 		authService = TestBed.inject(AuthService);
+		store = TestBed.inject(MockStore);
+
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});
@@ -65,7 +70,7 @@ describe('SigninFormComponent', () => {
 				complete: () => expect(true).toBeTruthy(),
 			});
 			expect(authService.signin).toHaveBeenCalled();
-			expect(router.navigate).toHaveBeenCalledWith(['/profile', '123']);
+			expect(router.navigate).toHaveBeenCalledWith(['/profile', '123', 'edit']);
 		});
 
 		it('should not call authService with invalid data from form', () => {

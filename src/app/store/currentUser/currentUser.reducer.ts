@@ -1,20 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
-import {
-	deleteCurrentUser,
-	deleteCurrentUserError,
-	deleteCurrentUserSuccess,
-	loadCurrentUser,
-	loadCurrentUserError,
-	loadCurrentUserSuccess,
-	logoutCurrentUser,
-	updateCurrentUser,
-	updateCurrentUserError,
-	updateCurrentUserSuccess,
-} from './currentUser.actions';
+import { IUserDefaultResponse } from '../../services/user/interface/user-service.interface';
+import * as CurrentUserActions from './currentUser.actions';
 import { ICurrentUserState } from './currentUser.state';
 
 export const currentUserInitialState: ICurrentUserState = {
-	user: null,
+	user: undefined,
 	error: null,
 	isLoading: false,
 };
@@ -22,7 +12,7 @@ export const currentUserInitialState: ICurrentUserState = {
 export const currentUserReducer = createReducer(
 	currentUserInitialState,
 	on(
-		loadCurrentUser,
+		CurrentUserActions.loadCurrentUser,
 		(state): ICurrentUserState => ({
 			...state,
 			isLoading: true,
@@ -30,7 +20,7 @@ export const currentUserReducer = createReducer(
 		})
 	),
 	on(
-		loadCurrentUserSuccess,
+		CurrentUserActions.loadCurrentUserSuccess,
 		(state, { payload }): ICurrentUserState => ({
 			...state,
 			isLoading: false,
@@ -39,16 +29,16 @@ export const currentUserReducer = createReducer(
 		})
 	),
 	on(
-		loadCurrentUserError,
+		CurrentUserActions.loadCurrentUserError,
 		(state, { error }): ICurrentUserState => ({
 			...state,
 			isLoading: false,
 			error,
-			user: null,
+			user: undefined,
 		})
 	),
 	on(
-		updateCurrentUser,
+		CurrentUserActions.updateCurrentUser,
 		(state): ICurrentUserState => ({
 			...state,
 			error: null,
@@ -56,7 +46,7 @@ export const currentUserReducer = createReducer(
 		})
 	),
 	on(
-		updateCurrentUserSuccess,
+		CurrentUserActions.updateCurrentUserSuccess,
 		(state, { payload }): ICurrentUserState => ({
 			...state,
 			error: null,
@@ -65,7 +55,7 @@ export const currentUserReducer = createReducer(
 		})
 	),
 	on(
-		updateCurrentUserError,
+		CurrentUserActions.updateCurrentUserError,
 		(state, { error }): ICurrentUserState => ({
 			...state,
 			isLoading: false,
@@ -73,7 +63,7 @@ export const currentUserReducer = createReducer(
 		})
 	),
 	on(
-		deleteCurrentUser,
+		CurrentUserActions.deleteCurrentUser,
 		(state): ICurrentUserState => ({
 			...state,
 			error: null,
@@ -81,16 +71,16 @@ export const currentUserReducer = createReducer(
 		})
 	),
 	on(
-		deleteCurrentUserSuccess,
+		CurrentUserActions.deleteCurrentUserSuccess,
 		(state): ICurrentUserState => ({
 			...state,
 			error: null,
 			isLoading: false,
-			user: null,
+			user: undefined,
 		})
 	),
 	on(
-		deleteCurrentUserError,
+		CurrentUserActions.deleteCurrentUserError,
 		(state, { error }): ICurrentUserState => ({
 			...state,
 			error,
@@ -98,12 +88,127 @@ export const currentUserReducer = createReducer(
 		})
 	),
 	on(
-		logoutCurrentUser,
+		CurrentUserActions.updateUniqueProduct,
+		(state): ICurrentUserState => ({
+			...state,
+			error: null,
+			isLoading: true,
+		})
+	),
+	on(
+		CurrentUserActions.updateUniqueProductSuccess,
+		(state, { payload }): ICurrentUserState => {
+			const updatedProducts = state.user?.products?.map((product) =>
+				product.id === payload.id ? (product = payload) : product
+			);
+
+			const updatedUser = {
+				...state.user,
+				products: updatedProducts,
+			} as IUserDefaultResponse;
+
+			return {
+				...state,
+				error: null,
+				isLoading: false,
+				user: updatedUser,
+			};
+		}
+	),
+	on(
+		CurrentUserActions.updateUniqueProductError,
+		(state, { error }): ICurrentUserState => ({
+			...state,
+			error,
+			isLoading: false,
+		})
+	),
+	on(
+		CurrentUserActions.deleteUniqueProduct,
+		(state): ICurrentUserState => ({
+			...state,
+			error: null,
+			isLoading: true,
+		})
+	),
+	on(
+		CurrentUserActions.deleteUniqueProductSuccess,
+		(state, { id }): ICurrentUserState => {
+			const updatedProducts = state.user?.products.filter(
+				(product) => product.id !== id
+			);
+
+			const updatedUser = {
+				...state.user,
+				products: updatedProducts,
+			} as IUserDefaultResponse;
+
+			return {
+				...state,
+				error: null,
+				isLoading: false,
+				user: updatedUser,
+			};
+		}
+	),
+	on(
+		CurrentUserActions.deleteUniqueProductError,
+		(state, { error }): ICurrentUserState => ({
+			...state,
+			error,
+			isLoading: false,
+		})
+	),
+	on(
+		CurrentUserActions.createUniqueProduct,
+		(state): ICurrentUserState => ({
+			...state,
+			error: null,
+			isLoading: true,
+		})
+	),
+	on(
+		CurrentUserActions.createUniqueProductSuccess,
+		(state, { payload }): ICurrentUserState => {
+			const updatedProducts = [...(state.user?.products || [])];
+
+			updatedProducts.push(payload);
+
+			const updatedUser = {
+				...state.user,
+				products: updatedProducts,
+			} as IUserDefaultResponse;
+
+			return {
+				...state,
+				error: null,
+				isLoading: false,
+				user: updatedUser,
+			};
+		}
+	),
+	on(
+		CurrentUserActions.createUniqueProductError,
+		(state, { error }): ICurrentUserState => ({
+			...state,
+			error,
+			isLoading: false,
+		})
+	),
+	on(
+		CurrentUserActions.clearCurrentUserError,
+		(state): ICurrentUserState => ({
+			...state,
+			error: null,
+		})
+	),
+	on(
+		CurrentUserActions.logoutCurrentUser,
 		(state): ICurrentUserState => ({
 			...state,
 			error: null,
 			isLoading: false,
-			user: null,
+			user: undefined,
 		})
 	)
 );

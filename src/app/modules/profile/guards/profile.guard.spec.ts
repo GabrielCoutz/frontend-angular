@@ -9,6 +9,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 
 import { ProfileGuard } from './profile.guard';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('ProfileGuard', () => {
 	let httpTestingController: HttpTestingController;
@@ -16,15 +17,18 @@ describe('ProfileGuard', () => {
 	let guard: ProfileGuard;
 	let authService: AuthService;
 	let router: Router;
+	let store: MockStore;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [HttpClientTestingModule, RouterTestingModule],
+			providers: [provideMockStore()],
 		});
 		httpTestingController = TestBed.inject(HttpTestingController);
 		httpClient = TestBed.inject(HttpClient);
 		authService = TestBed.inject(AuthService);
 		router = TestBed.inject(Router);
+		store = TestBed.inject(MockStore);
 		guard = TestBed.inject(ProfileGuard);
 	});
 

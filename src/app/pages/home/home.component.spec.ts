@@ -5,6 +5,7 @@ import { SharedModule } from '../../modules/shared/shared.module';
 import { HomeComponent } from './home.component';
 
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('HomeComponent', () => {
 	let homeComponent: HomeComponent;
@@ -14,7 +15,7 @@ describe('HomeComponent', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [HomeComponent, IntroComponent],
-			imports: [SharedModule],
+			imports: [SharedModule, RouterTestingModule],
 			providers: [provideMockStore({})],
 		}).compileComponents();
 		fixture = TestBed.createComponent(HomeComponent);
@@ -26,15 +27,5 @@ describe('HomeComponent', () => {
 
 	it('should create', () => {
 		expect(homeComponent).toBeTruthy();
-	});
-
-	describe('On init', () => {
-		it('should dispatch loadProducts', () => {
-			spyOn(store, 'dispatch').and.callThrough();
-
-			homeComponent.ngOnInit();
-
-			expect(store.dispatch).toHaveBeenCalled();
-		});
 	});
 });

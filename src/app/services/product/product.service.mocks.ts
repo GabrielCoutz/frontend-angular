@@ -19,11 +19,12 @@ export const productExpectPayload = {
 export const productUpdatePayload = {
 	id: '123',
 	name: 'updated product name response',
-	price: '2000',
+	price: 2000,
 	created_at: new Date(),
 	description: 'updated product description response',
 	user: {
 		id: '456',
 		name: 'user name',
 	},
+	products: [],
 };
