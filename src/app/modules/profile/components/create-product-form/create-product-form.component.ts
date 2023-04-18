@@ -28,6 +28,8 @@ export class CreateProductFormComponent {
 	loading$ = this.store.select(selectCurrentUserLoading);
 
 	submit() {
+		if (this.createProductForm.invalid) return;
+
 		const createProductDto = {
 			name: this.createProductForm.value.name,
 			price: Number(this.createProductForm.value.price),

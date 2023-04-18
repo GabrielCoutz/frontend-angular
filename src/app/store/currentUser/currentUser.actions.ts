@@ -94,3 +94,6 @@ export const deleteUniqueProductError = createAction(
 );
 
 export const logoutCurrentUser = createAction('[CurrentUser] logout user');
+export const clearCurrentUserError = createAction(
+	'[CurrentUser] clear user error'
+);

@@ -5,6 +5,7 @@ const userMock = {
 	email: 'user@example.com',
 	id: '123',
 	name: 'user',
+	products: [],
 };
 const userErrorMock = 'any error';
 

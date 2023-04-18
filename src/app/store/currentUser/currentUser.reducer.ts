@@ -196,6 +196,13 @@ export const currentUserReducer = createReducer(
 		})
 	),
 	on(
+		CurrentUserActions.clearCurrentUserError,
+		(state): ICurrentUserState => ({
+			...state,
+			error: null,
+		})
+	),
+	on(
 		CurrentUserActions.logoutCurrentUser,
 		(state): ICurrentUserState => ({
 			...state,

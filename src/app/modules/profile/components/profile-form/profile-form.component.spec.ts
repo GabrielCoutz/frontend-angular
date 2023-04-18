@@ -91,7 +91,7 @@ describe('ProfileFormComponent', () => {
 			const result = selectCurrentUserError.projector({
 				error: 'Any error',
 				isLoading: false,
-				user: null,
+				user: undefined,
 			});
 
 			expect(store.dispatch).toHaveBeenCalled();

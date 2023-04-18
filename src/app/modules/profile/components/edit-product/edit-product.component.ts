@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { IProductUpdatePayload } from '../../../../services/product/interface/product-service.interface';
 import { updateUniqueProduct } from '../../../../store/currentUser/currentUser.actions';
 import {
 	selectCurrentUserLoading,
@@ -32,11 +31,13 @@ export class EditProductComponent {
 	loading$ = this.store.select(selectCurrentUserLoading);
 
 	submit() {
+		if (this.myProductForm.invalid) return;
+
 		const productUpdateDto = {
 			name: this.myProductForm.value.name as string,
-			price: this.myProductForm.value.price,
+			price: Number(this.myProductForm.value.price),
 			description: this.myProductForm.value.description as string,
-		} as IProductUpdatePayload;
+		};
 
 		this.store.dispatch(
 			updateUniqueProduct({
