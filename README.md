@@ -53,6 +53,8 @@ Não é possível replicar o projeto com o container docker, **ainda**, porém a
 
 :white_check_mark: Todos estados e efeitos são gerenciados pelo NgRx
 
+:white_check_mark: **90%** de code coverage
+
 :white_check_mark: Modelo <a href="https://www.atlassian.com/br/git/tutorials/comparing-workflows/gitflow-workflow">Gitflow</a> utilizado
 
 :white_check_mark: Feedback em todas ações realizadas (loading, error, alert...)
