@@ -1,27 +1,71 @@
-# Projeto
+# Frontend para cadastro de usuários e produtos
+<h4>Consumindo meu próprio backend: <a href="https://github.com/GabrielCoutz/nestjs-prisma-api">NestJS API com Prisma</a> </h4>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
+<div align="center">
+  <img src="./github-assets/banner.jpg" alt="Banner do projeto" />
+</div>
 
-## Development server
+## Tópicos
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+<div>
+ • <a href="#sobre">📋 Sobre o Projeto</a> </br>
+ • <a href="#tecnologias">🔮 Tecnologias</a> </br>
+ • <a href="#funcionalidades">🛠 Funcionalidades</a> </br>
+ • <a href="#demonstração">🎥 Demonstração</a> </br>
+ • <a href="#autor">😎 Autor</a> </br>
+</div>
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+<h2 id="sobre">📋 Sobre o projeto</h2>
 
-## Build
+Este projeto tem como intenção o aprofundamento em Angular, conhecimento e prática do NgRx e aumentar o domínio do Angular Material
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Além disso, faz-se presente o consumo da minha própria API, disponível em um container Docker, no qual é feita a total integração
 
-## Running unit tests
+Não é possível replicar o projeto com o container docker, **ainda**, porém a API está disponível em: <a href="https://github.com/GabrielCoutz/nestjs-prisma-api">github.com/GabrielCoutz/nestjs-prisma-api</a>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+<h2 id="tecnologias">🔮 Tecnologias</h2>
 
-## Further help
+[![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)](https://angular.io/) [![Jasmine](https://img.shields.io/badge/Jasmine-8A4182?style=for-the-badge&logo=Jasmine&logoColor=white)](https://jasmine.github.io/) [![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)](https://ngrx.io/) [![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/pt/) [![Material Design](https://img.shields.io/badge/material%20design-757575?style=for-the-badge&logo=material%20design&logoColor=white)](https://material.angular.io/)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+---
+
+
+<h2 id="funcionalidades">🛠 Funcionalidades</h2>
+
+**Autenticação**
+
+:white_check_mark: Auto Login
+
+:white_check_mark: Route Guards
+
+:white_check_mark: Autenticação em ações
+
+**Estrutura**
+
+:white_check_mark: Componentes puros (Apenas consomem dados, não alteram estados)
+
+**Plus**
+
+:white_check_mark: Todos estados e efeitos são gerenciados pelo NgRx
+
+:white_check_mark: Feedback em todas ações realizadas (loading, error, alert...)
+
+---
+
+<h2 id="demonstração">📷 Demonstração</h2>
+
+
+
+---
+
+<h2 id="author">😎 Entre em contato</h2>
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gabrielcoutz/) 
+<div align="center">
+  Desenvolvido por <strong>eu mesmo😊</strong>
+</div>
